@@ -21,7 +21,7 @@ cp .env.example .env.local
 npm run dev        # http://localhost:3000
 ```
 
-The kitchen display works in development with the PIN `2468`. In production it stays locked until you set `KITCHEN_PIN` and `SESSION_SECRET`.
+The kitchen display works in development with the PIN `2468`. In production it stays locked until you set `KITCHEN_PIN`.
 
 | Script | Does |
 |---|---|
@@ -35,9 +35,9 @@ The kitchen display works in development with the PIN `2468`. In production it s
 | Variable | Required in prod | Purpose |
 |---|---|---|
 | `KITCHEN_PIN` | yes | PIN for `/kitchen` |
-| `SESSION_SECRET` | yes | Signs the kitchen session cookie. Use a long random string |
-| `DATABASE_PATH` | no | SQLite file location (default `./data/the-usual.db`) |
-| `NEXT_PUBLIC_SITE_URL` | recommended | Canonical URL for metadata, sitemap and Open Graph |
+| `SESSION_SECRET` | no | Signs the kitchen sign-in cookie. Without it a random one is made at startup, so staff re-enter the PIN after each restart |
+| `DATABASE_PATH` | no | SQLite file location. Defaults to a Railway volume if one is attached, otherwise `./data/the-usual.db` (`/app/data` in Docker) |
+| `NEXT_PUBLIC_SITE_URL` | no | Canonical URL for metadata, sitemap and Open Graph. On Railway the generated domain is used if unset. Applied at build time |
 
 ---
 
@@ -83,7 +83,7 @@ Everything follows *Brand Guidelines 1.0*:
 | GET/POST/DELETE | `/api/kitchen/session` | Kitchen PIN sign-in and sign-out (HttpOnly signed cookie) |
 | GET | `/api/kitchen/orders` | Active orders (kitchen only) |
 | PATCH | `/api/kitchen/orders/:id` | Change status (kitchen only) |
-| GET | `/api/health` | Health check |
+| GET | `/api/health` | Health check. `storage: "volume"` confirms orders are on persistent storage |
 
 ## Project layout
 
@@ -108,12 +108,24 @@ public/images/       photography (optimised JPGs)
 
 ## Deploying
 
-The app is a standard Node server (`npm run build && npm start`). SQLite needs a **persistent disk**:
+### Railway (set up)
 
-- **Railway / Render / Fly.io / a VPS:** mount a volume and point `DATABASE_PATH` at it, e.g. `/data/the-usual.db`.
-- **Vercel / serverless:** the filesystem is ephemeral, so swap `lib/server/db.ts` and `lib/server/orders.ts` to a hosted Postgres (Neon, Supabase). The repository functions are the only place that touches the database.
+The repo ships a `Dockerfile` (standalone Next.js server, tested locally) and `railway.json` (Dockerfile build, `/api/health` health check, restart on failure).
 
-The rate limiter is in-memory, which is fine for one instance. Use Redis if you run more than one.
+1. In Railway: **New Project → Deploy from GitHub repo → TheUsual.** It builds from the `Dockerfile` automatically.
+2. **Add a volume** to the service with mount path **`/app/data`**. This is where orders and tallies live; without it they are wiped on every deploy.
+3. **Variables:** add `KITCHEN_PIN` (4–8 digits). Optionally add `SESSION_SECRET` (any long random string) so the kitchen stays signed in across deploys.
+4. **Settings → Networking → Generate Domain.** If it asks for a port, use the one in the deploy logs’ `Local:` line.
+5. **Redeploy once**, so links and social previews use the new domain (it is applied at build time). For a custom domain, set `NEXT_PUBLIC_SITE_URL` and redeploy.
+6. Open `https://<your-domain>/api/health`. It should say `"storage":"volume"`. If it says `"local-disk"`, the volume isn’t mounted at `/app/data`.
+
+Keep the service at **one replica**: SQLite and the rate limiter live on that one instance.
+
+### Other hosts
+
+- **Any Docker host** (Render, Fly.io, a VPS): `docker build -t the-usual . && docker run -p 3000:3000 -e KITCHEN_PIN=… -v usual-data:/app/data the-usual`.
+- **Plain Node:** `npm run build && npm start`, with `DATABASE_PATH` on a persistent disk.
+- **Vercel / serverless:** the filesystem doesn’t persist, so move the database to a hosted one first (Turso keeps the same SQL; Neon Postgres needs small query changes). `lib/server/db.ts` and `lib/server/orders.ts` are the only files that touch it.
 
 ## Before launch: replace placeholders
 

@@ -4,7 +4,8 @@
 
 export const site = {
   name: 'the usual',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://theusualcoffee.in',
+  // Fixed at build time. On Railway the generated domain is used until you set NEXT_PUBLIC_SITE_URL.
+  url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : 'https://theusualcoffee.in'),
   tagline: 'Everyone has a usual.',
   descriptor: 'Coffee, rolls & bowls',
   signOff: 'Same time tomorrow?',

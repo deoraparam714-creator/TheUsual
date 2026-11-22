@@ -69,14 +69,47 @@ function loadSqlite(): typeof import('node:sqlite') {
   }
 }
 
+/**
+ * Where the database file lives, in order of preference:
+ * 1. DATABASE_PATH, if set (":memory:" for tests)
+ * 2. RAILWAY_VOLUME_MOUNT_PATH/the-usual.db, if a Railway volume is attached elsewhere
+ * 3. ./data/the-usual.db — in the Docker image that's /app/data, so a volume mounted there just works
+ */
+export function resolveDbFile(env: Record<string, string | undefined> = process.env): string {
+  if (env.DATABASE_PATH) return env.DATABASE_PATH === ':memory:' ? ':memory:' : path.resolve(/*turbopackIgnore: true*/ env.DATABASE_PATH);
+  if (env.RAILWAY_VOLUME_MOUNT_PATH) return path.join(/*turbopackIgnore: true*/ env.RAILWAY_VOLUME_MOUNT_PATH, 'the-usual.db');
+  return path.resolve(/*turbopackIgnore: true*/ './data/the-usual.db');
+}
+
+export type Storage = 'volume' | 'local-disk' | 'memory';
+
+/** A mounted volume sits on a different device from the container's root filesystem. */
+export function detectStorage(file: string): Storage {
+  if (file === ':memory:') return 'memory';
+  try {
+    return fs.statSync(path.dirname(file)).dev !== fs.statSync('/').dev ? 'volume' : 'local-disk';
+  } catch {
+    return 'local-disk';
+  }
+}
+
+export function storage(): Storage {
+  return detectStorage(resolveDbFile());
+}
+
 export function db(): DatabaseSync {
   if (g.__usualDb) return g.__usualDb;
   const { DatabaseSync } = loadSqlite();
-  const file = process.env.DATABASE_PATH === ':memory:' ? ':memory:' : path.resolve(/*turbopackIgnore: true*/ process.env.DATABASE_PATH ?? './data/the-usual.db');
+  const file = resolveDbFile();
   if (file !== ':memory:') fs.mkdirSync(path.dirname(file), { recursive: true });
   const instance = new DatabaseSync(file);
   instance.exec('PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 4000; PRAGMA foreign_keys = ON;');
   migrate(instance);
+  if (process.env.NODE_ENV === 'production' && detectStorage(file) !== 'volume') {
+    console.warn(
+      `[the usual] Orders are stored at ${file}, on the container's own disk. On Railway and similar hosts that disk is wiped on every deploy — attach a volume at /app/data.`,
+    );
+  }
   g.__usualDb = instance;
   return instance;
 }

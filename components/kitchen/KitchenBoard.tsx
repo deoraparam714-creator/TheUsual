@@ -90,7 +90,7 @@ export function KitchenBoard() {
           <Logo variant="stacked" className="w-28 text-milk" />
           <h1 className="t-headline mt-10">Kitchen<span className="dot" aria-hidden /></h1>
           {session === 'unconfigured' ? (
-            <p className="mt-4 text-milk/70">Set <code className="rounded bg-milk/10 px-1">KITCHEN_PIN</code> and <code className="rounded bg-milk/10 px-1">SESSION_SECRET</code> on the server to turn the kitchen display on.</p>
+            <p className="mt-4 text-milk/70">Set <code className="rounded bg-milk/10 px-1">KITCHEN_PIN</code> on the server to turn the kitchen display on.</p>
           ) : (
             <>
               <label htmlFor="pin" className="t-label mt-8 block text-milk/60">

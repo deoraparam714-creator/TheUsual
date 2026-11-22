@@ -1,6 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // Self-contained server.js for the Docker image (see Dockerfile). Local `next start` stays unchanged.
+  output: process.env.NEXT_OUTPUT === 'standalone' ? 'standalone' : undefined,
   reactStrictMode: true,
   poweredByHeader: false,
   images: {

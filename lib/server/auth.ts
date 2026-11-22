@@ -7,11 +7,17 @@ const TTL_SECONDS = 14 * 3600; // one long shift
 
 const isProd = process.env.NODE_ENV === 'production';
 
-/** In production both env vars are required; in development we fall back to documented defaults. */
+const g = globalThis as unknown as { __usualSessionSecret?: string };
+
+/**
+ * KITCHEN_PIN is required in production (development falls back to 2468).
+ * SESSION_SECRET is optional: without it a random secret is made at startup,
+ * so kitchen sign-ins simply reset when the server restarts or redeploys.
+ */
 export function kitchenConfig(): { pin: string; secret: string } | null {
-  const pin = process.env.KITCHEN_PIN ?? (isProd ? undefined : '2468');
-  const secret = process.env.SESSION_SECRET ?? (isProd ? undefined : 'dev-only-secret-change-me');
-  if (!pin || !secret) return null;
+  const pin = process.env.KITCHEN_PIN || (isProd ? undefined : '2468');
+  if (!pin) return null;
+  const secret = process.env.SESSION_SECRET || (g.__usualSessionSecret ??= crypto.randomBytes(32).toString('hex'));
   return { pin, secret };
 }
 
