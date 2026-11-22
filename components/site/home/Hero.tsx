@@ -50,7 +50,7 @@ export function Hero() {
 
       <Container className="mt-10 md:mt-16">
         <figure>
-          <div className="img-reveal relative aspect-[4/5] overflow-hidden rounded-[18px] bg-toast sm:aspect-[16/10] lg:aspect-[16/8]" style={{ ['--delay' as string]: '200ms' }}>
+          <div className="img-reveal relative aspect-square overflow-hidden rounded-[18px] bg-toast sm:aspect-[16/10] lg:aspect-[16/8]" style={{ ['--delay' as string]: '200ms' }}>
             <div className="img-reveal-inner absolute inset-0">
               <Parallax className="absolute inset-0" amount={36}>
                 <Image
@@ -60,7 +60,7 @@ export function Hero() {
                   preload
                   quality={85}
                   sizes="(min-width: 1440px) 1344px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 32px)"
-                  className="object-cover object-[18%_50%]"
+                  className="object-cover object-[22%_50%]"
                 />
               </Parallax>
             </div>
