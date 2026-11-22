@@ -129,7 +129,9 @@ Keep the service at **one replica**: SQLite and the rate limiter live on that on
 
 ## Before launch: replace placeholders
 
-- **Locations, addresses, hours, email and Instagram** in `lib/site.ts`. These are placeholders. Add `mapsUrl` to show a Directions button.
+- **Locations, addresses and hours** in `lib/site.ts` are placeholders. Add `mapsUrl` to show a Directions button.
+- **Email and Instagram** in `lib/site.ts` are blank. The footer links and the “A cart for your campus” section appear once you fill them in.
+- **Site address:** set `NEXT_PUBLIC_SITE_URL` to your live URL (your Railway address now, your own domain later) so link previews and the sitemap point to the right place.
 - **Option prices** (extras, sizes, dips, “make it lunch”) in `lib/menu.ts` are proposals. Item prices come from Menu No. 01.
 - **Merch prices** (Tee ₹799, Cap ₹599, Mug ₹449) in `lib/menu.ts` are placeholders. Merch is ordered through the app and picked up with food; the tote stays earned, not sold.
 - **Photography.** *Cold Coffee* and *Chipotle Salsa Bowl* use crops from the table shot as stand-ins. *Berry Cookie Smoothie* has no photo yet and shows a type-only tile. Shoot them per the launch shot list.

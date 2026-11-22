@@ -90,6 +90,7 @@ export default function FindUsPage() {
         </ul>
       </Container>
 
+      {site.email && (
       <section className="border-t border-line py-20 md:py-28">
         <Container className="grid grid-cols-1 gap-8 md:grid-cols-12">
           <div className="md:col-span-6">
@@ -106,6 +107,7 @@ export default function FindUsPage() {
           </div>
         </Container>
       </section>
+      )}
 
       <SignOff />
     </>

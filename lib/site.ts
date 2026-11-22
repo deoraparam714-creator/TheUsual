@@ -4,16 +4,17 @@
 
 export const site = {
   name: 'the usual',
-  // Fixed at build time. On Railway the generated domain is used until you set NEXT_PUBLIC_SITE_URL.
-  url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : 'https://theusualcoffee.in'),
+  // Fixed at build time. Set NEXT_PUBLIC_SITE_URL to your live address (e.g. your Railway URL, later your own domain).
+  url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : 'http://localhost:3000'),
   tagline: 'Everyone has a usual.',
   descriptor: 'Coffee, rolls & bowls',
   signOff: 'Same time tomorrow?',
   city: 'Bengaluru',
   description:
     'the usual is a neighbourhood café in Bengaluru for coffee, rolls and bowls. Pre-order by 11, lunch by 1, your name on the cup.',
-  email: 'hello@theusualcoffee.in',
-  instagram: { handle: '@theusual.blr', url: 'https://www.instagram.com/' },
+  // Contact links only appear on the site once these are filled in.
+  email: '' as string,
+  instagram: { handle: '' as string, url: '' as string },
 } as const;
 
 export type Hours = {

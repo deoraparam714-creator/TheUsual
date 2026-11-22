@@ -47,21 +47,27 @@ export function SiteFooter() {
                 ))}
               </ul>
             </div>
-            <div>
-              <h2 className="t-label text-milk/50">Say hi</h2>
-              <ul className="mt-5 space-y-3 text-[0.9375rem]">
-                <li>
-                  <a href={`mailto:${site.email}`} className="link-underline break-all">
-                    Email us
-                  </a>
-                </li>
-                <li>
-                  <a href={site.instagram.url} className="link-underline" target="_blank" rel="noreferrer">
-                    Instagram
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {(site.email || site.instagram.url) && (
+              <div>
+                <h2 className="t-label text-milk/50">Say hi</h2>
+                <ul className="mt-5 space-y-3 text-[0.9375rem]">
+                  {site.email && (
+                    <li>
+                      <a href={`mailto:${site.email}`} className="link-underline break-all">
+                        Email us
+                      </a>
+                    </li>
+                  )}
+                  {site.instagram.url && (
+                    <li>
+                      <a href={site.instagram.url} className="link-underline" target="_blank" rel="noreferrer">
+                        Instagram
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 
