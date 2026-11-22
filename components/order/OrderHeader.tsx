@@ -28,7 +28,7 @@ export function OrderHeader() {
     <>
       <header className="sticky top-0 z-40 border-b border-line bg-milk/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-3 px-4 md:px-8">
-          <Link href="/" className="-m-2 shrink-0 p-2" aria-label="the usual — home">
+          <Link href="/" className="-m-3 shrink-0 p-3" aria-label="the usual — home">
             <Logo variant="oneline" decorative className="h-5 w-auto md:h-[22px]" />
           </Link>
 
@@ -48,7 +48,7 @@ export function OrderHeader() {
               <button
                 type="button"
                 onClick={() => setCartOpen(true)}
-                className="relative grid size-11 place-items-center rounded-full transition-colors hover:bg-foam lg:hidden"
+                className="relative grid size-11 shrink-0 place-items-center rounded-full transition-colors hover:bg-foam lg:hidden"
                 aria-label={`Your order, ${count} ${count === 1 ? 'item' : 'items'}`}
               >
                 <BagIcon className="size-6" />

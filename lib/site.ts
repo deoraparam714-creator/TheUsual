@@ -99,6 +99,7 @@ export function formatHours(hours: Hours): string {
 
 export const nav = [
   { href: '/menu', label: 'Menu' },
+  { href: '/merch', label: 'Merch' },
   { href: '/regulars', label: 'Regulars' },
   { href: '/find-us', label: 'Find us' },
 ] as const;

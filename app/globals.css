@@ -311,3 +311,25 @@ html.js .tally-draw.is-in .tally-stroke {
     animation: none;
   }
 }
+
+/* ── Touch polish (iPhone) ──────────────────────────────── */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+/* No double-tap-to-zoom on controls, so quick taps on +/− register as taps. */
+a,
+button,
+input,
+label,
+select,
+textarea,
+[role='button'] {
+  touch-action: manipulation;
+}
+@media (hover: none) {
+  /* Feedback on touch, since hover states never fire. */
+  a:active,
+  button:active {
+    opacity: 0.86;
+  }
+}

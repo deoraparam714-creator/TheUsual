@@ -105,7 +105,7 @@ function Body({ item }: { item: MenuItem }) {
             value={sel.note}
             onChange={(e) => setSel({ note: e.target.value.slice(0, 140) })}
             placeholder="No onions, extra crispy, it’s a birthday…"
-            className="mt-3 min-h-12 w-full rounded-[10px] border border-line-strong bg-milk px-4 text-[0.9375rem] placeholder:text-grind/60 focus:border-espresso focus:outline-none"
+            className="mt-3 min-h-12 w-full rounded-[10px] border border-line-strong bg-milk px-4 text-base placeholder:text-grind/60 focus:border-espresso focus:outline-none"
           />
         </div>
       </div>

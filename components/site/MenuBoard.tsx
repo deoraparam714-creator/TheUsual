@@ -15,8 +15,8 @@ export function MenuBoard({ category, items, index }: { category: Category; item
   const current = items.find((i) => i.id === active) ?? items[0];
 
   return (
-    <section id={category.id} className="scroll-mt-32 border-t border-line py-16 md:py-24" aria-labelledby={`${category.id}-title`}>
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
+    <section id={category.id} className="scroll-mt-32 border-t border-line py-12 md:py-24" aria-labelledby={`${category.id}-title`}>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-5">
           <div className="md:sticky md:top-28">
             <p className="t-label text-grind">{String(index + 1).padStart(2, '0')} — {category.title}</p>
@@ -43,7 +43,7 @@ export function MenuBoard({ category, items, index }: { category: Category; item
         <ul className="md:col-span-7 md:pt-24">
           {items.map((item) => (
             <li key={item.id} className="reveal border-b border-line first:border-t" onMouseEnter={() => setActive(item.id)} onFocus={() => setActive(item.id)}>
-              <Link href={`/order?item=${item.id}`} className="group grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 py-6 md:py-8">
+              <Link href={`/order?item=${item.id}`} className="group grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 py-5 md:py-8">
                 <div className="flex min-w-0 items-center gap-4">
                   <ItemImage item={item} sizes="80px" compact className="size-[72px] shrink-0 rounded-[10px] md:hidden" />
                   <div className="min-w-0">

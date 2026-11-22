@@ -30,11 +30,11 @@ export function NameLine() {
   }, [value, reduce]);
 
   return (
-    <section className="relative overflow-hidden bg-toast py-24 md:py-36" aria-labelledby="nameline-title">
-      <Container className="grid grid-cols-1 items-center gap-14 md:grid-cols-12 md:gap-8">
+    <section className="relative overflow-hidden bg-toast py-20 md:py-36" aria-labelledby="nameline-title">
+      <Container className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-6">
           <Reveal fade>
-            <Eyebrow n="04" className="!text-espresso/60">
+            <Eyebrow n="03" className="!text-espresso/60">
               The name line
             </Eyebrow>
           </Reveal>

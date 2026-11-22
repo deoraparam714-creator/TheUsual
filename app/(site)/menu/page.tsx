@@ -6,7 +6,10 @@ import { MenuBoard } from '@/components/site/MenuBoard';
 import { Container, Dot, Eyebrow } from '@/components/site/Section';
 import { SignOff } from '@/components/site/SignOff';
 import { ButtonLink } from '@/components/ui/Button';
-import { categories, itemsIn, menu } from '@/lib/menu';
+import { categories as allCategories, itemsIn, menu } from '@/lib/menu';
+
+const categories = allCategories.filter((c) => c.id !== 'merch');
+const foodCount = menu.filter((m) => m.category !== 'merch').length;
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -44,7 +47,7 @@ export default function MenuPage() {
               <Eyebrow>Menu No. 01</Eyebrow>
             </Reveal>
             <Reveal fade delay={120}>
-              <p className="t-label text-grind">{menu.length} things, made properly</p>
+              <p className="t-label text-grind">{foodCount} things, made properly</p>
             </Reveal>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-8 md:mt-8 md:grid-cols-12 md:items-end">
@@ -94,6 +97,11 @@ export default function MenuPage() {
           <MenuBoard key={c.id} category={c} items={itemsIn(c.id)} index={i} />
         ))}
         <p className="border-t border-line pt-8 text-sm text-grind">
+          Looking for caps, tees and mugs?{' '}
+          <Link href="/merch" className="font-semibold text-espresso underline decoration-line-strong underline-offset-4">
+            Shop merch
+          </Link>
+          .{' '}
           Something on your mind? Allergies, spice, a birthday — add a note when you order, or tell us at the counter.
         </p>
       </Container>

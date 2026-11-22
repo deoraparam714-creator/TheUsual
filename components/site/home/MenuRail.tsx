@@ -11,12 +11,12 @@ import { Rail } from './Rail';
 export function MenuRail() {
   const items = featuredIds.map((id) => menuById[id]).filter(Boolean);
   return (
-    <section className="overflow-hidden bg-foam py-24 md:py-36" aria-labelledby="menu-rail-title">
+    <section className="overflow-hidden bg-foam py-20 md:py-36" aria-labelledby="menu-rail-title">
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
             <Reveal fade>
-              <Eyebrow n="03">The menu</Eyebrow>
+              <Eyebrow n="02">The menu</Eyebrow>
             </Reveal>
             <Lines id="menu-rail-title" className="t-display mt-5" lines={[<>Lunch, sorted<Dot key="d" /></>]} />
             <Reveal delay={150}>

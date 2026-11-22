@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Tally } from '@/components/brand/Tally';
 import { Lines } from '@/components/motion/Lines';
 import { Reveal } from '@/components/motion/Reveal';
-import { Merch, UsualOfTheWeek } from '@/components/site/home/More';
+import { UsualOfTheWeek } from '@/components/site/home/More';
 import { Container, Dot, Eyebrow } from '@/components/site/Section';
 import { SignOff } from '@/components/site/SignOff';
 import { TallyCard } from '@/components/site/TallyCard';
@@ -127,7 +127,6 @@ export default function RegularsPage() {
       <div className="pt-20 md:pt-32">
         <UsualOfTheWeek />
       </div>
-      <Merch />
       <SignOff />
     </>
   );

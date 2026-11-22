@@ -1,6 +1,7 @@
-import { Facts, Hero, Idea, Values } from '@/components/site/home/Hero';
+import { Facts, Hero, Idea } from '@/components/site/home/Hero';
 import { MenuRail } from '@/components/site/home/MenuRail';
-import { Gallery, Merch, Places, Ritual, UsualOfTheWeek } from '@/components/site/home/More';
+import { Places, Ritual } from '@/components/site/home/More';
+import { MerchTeaser } from '@/components/site/Merch';
 import { NameLine } from '@/components/site/home/NameLine';
 import { SignOff } from '@/components/site/SignOff';
 import { site } from '@/lib/site';
@@ -24,14 +25,11 @@ export default function HomePage() {
       <Hero />
       <Facts />
       <Idea />
-      <Values />
       <MenuRail />
       <NameLine />
       <Ritual />
-      <Gallery />
       <Places />
-      <UsualOfTheWeek />
-      <Merch />
+      <MerchTeaser n="06" />
       <SignOff />
     </>
   );

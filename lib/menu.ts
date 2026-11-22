@@ -1,7 +1,7 @@
 // Menu No. 01 — from the current menu poster. 100% vegetarian, prices in ₹.
 // Option prices (extras, sizes, dips) are proposals: adjust to your costing.
 
-export type CategoryId = 'rolls' | 'fries' | 'bowls' | 'drinks';
+export type CategoryId = 'rolls' | 'fries' | 'bowls' | 'drinks' | 'merch';
 
 export type OptionChoice = { id: string; label: string; price?: number };
 
@@ -41,6 +41,7 @@ export const categories: Category[] = [
   { id: 'fries', title: 'Fries', blurb: 'Thick-cut, double-fried, salted right.' },
   { id: 'bowls', title: 'Bowls', blurb: 'The same fillings over rice. Lunch, sorted.' },
   { id: 'drinks', title: 'Drinks', blurb: 'Cold, hot, or somewhere sweet in between.' },
+  { id: 'merch', title: 'Merch', blurb: 'Take a little of the usual home. Picked up with your order.' },
 ];
 
 const spice: OptionGroup = {
@@ -127,6 +128,19 @@ const milk: OptionGroup = {
   choices: [
     { id: 'dairy', label: 'Dairy' },
     { id: 'oat', label: 'Oat', price: 40 },
+  ],
+};
+
+const teeSize: OptionGroup = {
+  id: 'size',
+  label: 'Size',
+  type: 'single',
+  defaultChoice: 'm',
+  choices: [
+    { id: 's', label: 'S' },
+    { id: 'm', label: 'M' },
+    { id: 'l', label: 'L' },
+    { id: 'xl', label: 'XL' },
   ],
 };
 
@@ -278,6 +292,44 @@ export const menu: MenuItem[] = [
     price: 149,
     options: [milk],
     prep: 4,
+  },
+  // ── Merch (prices are placeholders: set your own)
+  {
+    id: 'merch-tee',
+    category: 'merch',
+    name: 'The Tee',
+    description: 'Cream cotton, small logo',
+    long: 'A cream cotton tee with a small the usual logo on the chest. Relaxed fit. Picked up with your order.',
+    price: 799,
+    image: '/images/tee.jpg',
+    imageAlt: 'A cream tee with a small the usual logo on the chest',
+    imagePosition: '50% 30%',
+    options: [teeSize],
+    prep: 1,
+  },
+  {
+    id: 'merch-cap',
+    category: 'merch',
+    name: 'The Cap',
+    description: 'Washed cream, embroidered u.',
+    long: 'A washed cotton cap with the u. mark embroidered in espresso and lime. One size, adjustable.',
+    price: 599,
+    image: '/images/merch-cap.jpg',
+    imageAlt: 'A cream cap with the u. mark embroidered on the front',
+    options: [],
+    prep: 1,
+  },
+  {
+    id: 'merch-mug',
+    category: 'merch',
+    name: 'The Mug',
+    description: 'Speckled ceramic, stacked logo',
+    long: 'A speckled ceramic mug with the stacked logo. Your usual, at home.',
+    price: 449,
+    image: '/images/merch-mug.jpg',
+    imageAlt: 'A speckled cream mug with the usual logo and a latte',
+    options: [],
+    prep: 1,
   },
 ];
 

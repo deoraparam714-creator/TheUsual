@@ -79,16 +79,14 @@ export function Facts() {
     { big: '6 min', title: 'Ready in', body: 'Hot rolls, cold coffee, no guesswork.' },
   ];
   return (
-    <section aria-label="How ordering works" className="py-16 md:py-24">
+    <section aria-label="How ordering works" className="py-10 md:py-24">
       <Container>
-        <ul className="grid grid-cols-1 border-t border-line md:grid-cols-3">
+        <ul className="grid grid-cols-3 divide-x divide-line border-y border-line">
           {facts.map((f, i) => (
-            <Reveal as="li" key={f.title} delay={i * 120} className="flex items-baseline justify-between gap-6 border-b border-line py-6 md:block md:border-b-0 md:border-l md:px-8 md:py-10 md:first:border-l-0 md:first:pl-0">
-              <div>
-                <p className="t-label text-grind">{f.title}</p>
-                <p className="mt-2 max-w-[26ch] text-[0.9375rem] text-grind md:mt-3">{f.body}</p>
-              </div>
-              <p className="shrink-0 font-display text-5xl font-extrabold leading-none tracking-[-0.03em] md:mt-8 md:text-7xl">{f.big}</p>
+            <Reveal as="li" key={f.title} delay={i * 120} className="px-3 py-5 first:pl-0 last:pr-0 md:px-8 md:py-10">
+              <p className="t-label text-grind">{f.title}</p>
+              <p className="mt-2 font-display text-[1.75rem] font-extrabold leading-none tracking-[-0.03em] xs:text-3xl md:mt-8 md:text-7xl">{f.big}</p>
+              <p className="mt-3 hidden max-w-[26ch] text-[0.9375rem] text-grind md:block">{f.body}</p>
             </Reveal>
           ))}
         </ul>
@@ -99,8 +97,8 @@ export function Facts() {
 
 export function Idea() {
   return (
-    <section className="on-dark relative overflow-hidden bg-espresso py-24 text-milk md:py-40" aria-labelledby="idea-title">
-      <Container className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
+    <section className="on-dark relative overflow-hidden bg-espresso py-20 text-milk md:py-36" aria-labelledby="idea-title">
+      <Container className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-6 md:pt-8">
           <Reveal fade>
             <Eyebrow n="01" className="!text-milk/50">
@@ -119,7 +117,7 @@ export function Idea() {
             ]}
           />
           <Reveal delay={200}>
-            <p className="t-body-lg mt-10 max-w-[38ch] text-milk/75">
+            <p className="t-body-lg mt-8 max-w-[38ch] text-milk/75">
               Everyone has a usual: the seat, the song, the order. the usual is the neighbourhood café where yours is remembered, made the same every time, and handed over with your name on it.
             </p>
           </Reveal>
@@ -132,40 +130,6 @@ export function Idea() {
           </div>
           <figcaption className="mt-3 text-xs text-milk/50">The hand-off. Two hands, one name.</figcaption>
         </figure>
-      </Container>
-    </section>
-  );
-}
-
-const VALUES = [
-  { t: 'Regulars over reach', d: 'We’d rather know 500 people by name than be liked by 50,000 strangers.' },
-  { t: 'Same, every time', d: 'Consistency is the luxury. The roll you loved on Monday is the roll you get on Friday.' },
-  { t: 'Easy, not lazy', d: 'Relaxed room, sharp standards. Clean counters, hot food, fast hands.' },
-  { t: 'Honest food', d: 'Home-style recipes, real protein, clear prices. Nothing we wouldn’t eat daily.' },
-];
-
-export function Values() {
-  return (
-    <section className="py-24 md:py-40" aria-labelledby="values-title">
-      <Container className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
-        <div className="md:col-span-4">
-          <Reveal fade>
-            <Eyebrow n="02">What we stand for</Eyebrow>
-          </Reveal>
-          <Lines id="values-title" className="t-headline mt-6 max-w-[10ch]" lines={['Four things', 'we don’t', <>bend on<Dot key="d" /></>]} />
-        </div>
-        <ol className="md:col-span-8 md:col-start-5">
-          {VALUES.map((v, i) => (
-            <Reveal as="li" key={v.t} delay={i * 90} className="grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-line py-7 last:border-b md:grid-cols-[4rem_1fr_1fr] md:gap-x-8 md:py-9">
-              <span className="t-label pt-2 text-grind">{String(i + 1).padStart(2, '0')}</span>
-              <h3 className="t-title">
-                {v.t}
-                <Dot />
-              </h3>
-              <p className="col-start-2 mt-3 max-w-[40ch] text-grind md:col-start-3 md:mt-1">{v.d}</p>
-            </Reveal>
-          ))}
-        </ol>
       </Container>
     </section>
   );

@@ -6,7 +6,7 @@ One Next.js codebase, two products:
 
 | | What it is | Where |
 |---|---|---|
-| **Website** | Editorial, mobile-first brand site: story, menu, regulars, locations | `/`, `/menu`, `/regulars`, `/find-us` |
+| **Website** | Editorial, mobile-first brand site: story, menu, merch, regulars, locations | `/`, `/menu`, `/merch`, `/regulars`, `/find-us` |
 | **Ordering app** | Order ahead for pickup: customise, name on the cup, pickup slot, live tracking, tally loyalty, one-tap “Order my usual” | `/order`, `/order/checkout`, `/order/track/[id]` |
 | **Kitchen display** | PIN-locked live board for staff: New → Making → Ready → Collected | `/kitchen` |
 
@@ -58,7 +58,7 @@ Everything follows *Brand Guidelines 1.0*:
 
 - **Colour.** Milk `#F5F1EA`, Espresso `#1C1A17`, Toast `#E8D7BD`, Usual Lime `#C5DC00`, plus Foam, Grind and Canvas. Lime is only ever a dot, a sticker or the one primary action on a screen. It is never used as text on milk.
 - **Type.** Bricolage Grotesque (display), Instrument Serif Italic (one accent word per layout), Inter (UI and body), Caveat (handwritten names). All are loaded with `next/font`.
-- **Logo.** `components/brand/Logo.tsx` renders stacked, one-line and `u.` mark variants from vectors **traced from the supplied logo master**. The logo is never retyped. The icons, favicon and Open Graph image are generated from the same paths.
+- **Logo.** `components/brand/Logo.tsx` renders the stacked, one-line and `u.` mark variants using the **official vector artwork extracted from the brand guidelines PDF** (pages 1 and 9). The logo is never retyped. The favicon and app icons are generated from the same `u.` mark.
 - **Graphic language.** `Tally` (four strokes and a lime slash), `NameSticker` (“the usual for ___”), `TallyPattern` and `Cup`.
 - **Voice.** Copy follows the voice table: “Got it. Your usual’s on the way.”, “That didn’t go through. Not you, us. Try again?”, “Same time tomorrow?”.
 
@@ -95,11 +95,11 @@ app/
   api/               route handlers
 components/
   brand/             Logo, Tally, NameSticker, TallyPattern, Cup
-  site/              header, footer, home sections, menu board, tally card
+  site/              header, footer, home sections, menu board, merch, tally card
   order/             sheet, item sheet, cart, checkout, tracker
   kitchen/           kitchen board
   motion/            reveal observer, smooth scroll, lines, parallax
-lib/                 menu, pricing, slots, tally, schemas, site config
+lib/                 menu, merch, pricing, slots, tally, schemas, site config
 lib/server/          SQLite, orders repository, auth, rate limiting
 store/               cart, profile and UI state
 tests/               Vitest suites
@@ -131,6 +131,7 @@ Keep the service at **one replica**: SQLite and the rate limiter live on that on
 
 - **Locations, addresses, hours, email and Instagram** in `lib/site.ts`. These are placeholders. Add `mapsUrl` to show a Directions button.
 - **Option prices** (extras, sizes, dips, “make it lunch”) in `lib/menu.ts` are proposals. Item prices come from Menu No. 01.
+- **Merch prices** (Tee ₹799, Cap ₹599, Mug ₹449) in `lib/menu.ts` are placeholders. Merch is ordered through the app and picked up with food; the tote stays earned, not sold.
 - **Photography.** *Cold Coffee* and *Chipotle Salsa Bowl* use crops from the table shot as stand-ins. *Berry Cookie Smoothie* has no photo yet and shows a type-only tile. Shoot them per the launch shot list.
 - **Usual of the week** copy (`components/site/home/More.tsx`).
 

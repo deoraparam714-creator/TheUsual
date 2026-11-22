@@ -52,6 +52,7 @@ export function TallyCheck() {
             <span className="pl-4 text-grind">+91</span>
             <input
               id={id}
+              type="tel"
               inputMode="numeric"
               autoComplete="tel-national"
               value={value}

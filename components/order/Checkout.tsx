@@ -157,7 +157,7 @@ export function Checkout() {
   const submitLabel = totals ? `Place order · ${inr(totals.total)}` : 'Place order';
 
   return (
-    <form onSubmit={placeOrder} noValidate className="mx-auto max-w-[1240px] px-4 pb-16 pt-6 md:px-8 md:pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
+    <form onSubmit={placeOrder} noValidate className="mx-auto max-w-[1240px] px-4 pb-32 pt-6 md:px-8 md:pt-10 lg:grid lg:pb-16 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
       <div className="min-w-0">
         <Link href="/order" className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-grind hover:text-espresso">
           <Chevron dir="left" className="size-4" /> Menu
@@ -179,7 +179,7 @@ export function Checkout() {
                   value={nameValue}
                   onChange={(e) => setName(e.target.value.slice(0, 20))}
                   autoComplete="given-name"
-                  placeholder="Riya"
+                  placeholder="Your name"
                   aria-invalid={touched && !!nameError}
                   aria-describedby={`${ids.name}-help`}
                   className="hand min-h-14 w-full border-b-2 border-espresso bg-transparent text-4xl leading-none placeholder:text-espresso/25 focus:outline-none aria-[invalid=true]:border-error"
@@ -284,6 +284,7 @@ export function Checkout() {
               <span className="pl-4 text-grind">+91</span>
               <input
                 id={ids.phone}
+                type="tel"
                 inputMode="numeric"
                 autoComplete="tel-national"
                 value={phoneValue}
@@ -368,16 +369,29 @@ export function Checkout() {
           )}
 
           {serverError && (
-            <p role="alert" className="mt-4 rounded-[10px] bg-error/10 p-3 text-sm text-error">
+            <p role="alert" className="mt-4 rounded-[10px] bg-error/10 p-3 text-sm text-error max-lg:hidden">
               {serverError}
             </p>
           )}
 
-          <Button type="submit" variant="lime" size="lg" className="mt-5 w-full" disabled={submitting}>
+          <Button type="submit" variant="lime" size="lg" className="mt-5 w-full max-lg:hidden" disabled={submitting}>
             {submitting ? 'Sending it to the counter…' : submitLabel}
           </Button>
         </div>
       </aside>
+
+      {/* Phones: the total and the button stay in reach while you fill the form. */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-milk/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md lg:hidden">
+        {serverError && (
+          <p role="alert" className="mb-2 text-sm text-error">
+            {serverError}
+          </p>
+        )}
+        <Button type="submit" variant="lime" size="lg" className="w-full justify-between" disabled={submitting}>
+          <span>{submitting ? 'Sending it to the counter…' : 'Place order'}</span>
+          {!submitting && totals && <span className="tabular-nums">{inr(totals.total)}</span>}
+        </Button>
+      </div>
     </form>
   );
 }

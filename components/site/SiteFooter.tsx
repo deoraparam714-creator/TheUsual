@@ -35,6 +35,7 @@ export function SiteFooter() {
                 {[
                   ['/menu', 'Menu'],
                   ['/order', 'Order ahead'],
+                  ['/merch', 'Merch'],
                   ['/regulars', 'Regulars'],
                   ['/find-us', 'Find us'],
                 ].map(([href, label]) => (
