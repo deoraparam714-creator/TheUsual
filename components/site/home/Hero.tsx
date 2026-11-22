@@ -60,7 +60,7 @@ export function Hero() {
                   preload
                   quality={85}
                   sizes="(min-width: 1440px) 1344px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 32px)"
-                  className="object-cover object-[22%_50%]"
+                  className="object-cover object-[18%_50%]"
                 />
               </Parallax>
             </div>
