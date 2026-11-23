@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     qualities: [75, 85, 90],
   },
+  // The Find us page now lives as a section on the home page.
+  async redirects() {
+    return [{ source: '/find-us', destination: '/#find-us', permanent: true }];
+  },
   async headers() {
     return [
       {

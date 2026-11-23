@@ -25,7 +25,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
   }, []);
   if (!enabled) return <>{children}</>;
   return (
-    <ReactLenis root options={{ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true, anchors: { offset: -80 } }}>
+    <ReactLenis root options={{ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true, anchors: true }}>
       <ScrollTopOnRoute />
       {children}
     </ReactLenis>

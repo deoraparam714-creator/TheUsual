@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import { useHydrated } from '@/hooks/useHydrated';
 
 /** A ribbon of words that slides sideways as you scroll down the page. */
-export function ScrollMarquee({ items, reverse = false, outline = false, strokeColor = 'rgb(245 241 234 / 0.55)', className }: { items: string[]; reverse?: boolean; outline?: boolean; strokeColor?: string; className?: string }) {
+export function ScrollMarquee({ items, reverse = false, muted = false, className }: { items: string[]; reverse?: boolean; muted?: boolean; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const hydrated = useHydrated();
@@ -18,8 +18,7 @@ export function ScrollMarquee({ items, reverse = false, outline = false, strokeC
         {run.map((t, i) => (
           <span
             key={i}
-            className="font-display text-[clamp(2.5rem,9vw,7rem)] font-extrabold uppercase leading-none tracking-[-0.03em]"
-            style={outline ? { color: 'transparent', WebkitTextStroke: `1.5px ${strokeColor}` } : undefined}
+            className={['font-display text-[clamp(2.5rem,9vw,7rem)] font-extrabold uppercase leading-none tracking-[-0.03em]', muted ? 'opacity-25' : ''].join(' ')}
           >
             {t}
             <span className="mx-6 inline-block size-[0.22em] rounded-full bg-lime align-middle md:mx-10" />

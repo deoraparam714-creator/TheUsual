@@ -34,24 +34,22 @@ export default function AboutPage() {
           <Reveal variant="fade">
             <Eyebrow>About the usual</Eyebrow>
           </Reveal>
-          <div className="mt-6 grid grid-cols-1 gap-8 md:mt-8 md:grid-cols-12 md:items-end">
-            <Lines
-              as="h1"
-              id="about-title"
-              className="t-display md:col-span-8"
-              delay={100}
-              lines={[
-                'A café for',
-                <>
-                  <span className="accent">regulars</span>
-                  <Dot />
-                </>,
-              ]}
-            />
-            <Reveal delay={300} className="md:col-span-4">
-              <p className="t-body-lg text-grind">Everyone has a usual: the seat, the song, the order. Ours is the place where yours is remembered.</p>
-            </Reveal>
-          </div>
+          <Lines
+            as="h1"
+            id="about-title"
+            className="t-display mt-5 md:mt-8"
+            delay={100}
+            lines={[
+              'A café for',
+              <>
+                <span className="accent">regulars</span>
+                <Dot />
+              </>,
+            ]}
+          />
+          <Reveal delay={300} className="mt-8 md:mt-12">
+            <p className="t-body-lg max-w-[40ch] text-grind">Everyone has a usual: the seat, the song, the order. Ours is the place where yours is remembered.</p>
+          </Reveal>
         </Container>
         <Container className="mt-12 md:mt-16">
           <ScrollTilt from={14}>
@@ -83,8 +81,8 @@ export default function AboutPage() {
               <ButtonLink href="/menu" variant="espresso" arrow>
                 See the menu
               </ButtonLink>
-              <ButtonLink href="/find-us" variant="outline">
-                Find us at Mesa
+              <ButtonLink href="/order" variant="outline">
+                Order ahead
               </ButtonLink>
             </div>
           </Reveal>
@@ -133,7 +131,7 @@ export default function AboutPage() {
             {FAQS.map((f, i) => (
               <Reveal key={f.q} variant="fade" delay={i * 60}>
                 <details className="group border-t border-line py-5 last:border-b [&_summary::-webkit-details-marker]:hidden" open={i === 0}>
-                  <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 font-display text-xl font-semibold tracking-[-0.01em] md:text-2xl">
+                  <summary className="t-subhead flex min-h-11 cursor-pointer list-none items-center justify-between gap-6">
                     {f.q}
                     <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-full border border-line-strong transition-transform duration-500 ease-[var(--ease-out-expo)] group-open:rotate-45">
                       <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">

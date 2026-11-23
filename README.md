@@ -6,7 +6,7 @@ One Next.js codebase, two products:
 
 | | What it is | Where |
 |---|---|---|
-| **Website** | Editorial, mobile-first brand site: story, protein, menu, merch, regulars, locations | `/`, `/about`, `/menu`, `/merch`, `/regulars`, `/find-us` |
+| **Website** | Editorial, mobile-first brand site: story, protein, menu, merch, regulars, locations | `/`, `/about`, `/menu`, `/merch`, `/regulars` (locations live on the home page) |
 | **Ordering app** | Order ahead for pickup: customise, name on the cup, pickup slot, live tracking, tally loyalty, one-tap “Order my usual” | `/order`, `/order/checkout`, `/order/track/[id]` |
 | **Kitchen display** | PIN-locked live board for staff: New → Making → Ready → Collected | `/kitchen` |
 
@@ -89,7 +89,7 @@ Everything follows *Brand Guidelines 1.0*:
 
 ```
 app/
-  (site)/            marketing pages: home, about, menu, merch, regulars, find-us
+  (site)/            marketing pages: home, about, menu, merch, regulars
   order/             ordering app: menu, checkout, track/[id]
   kitchen/           kitchen display
   api/               route handlers
@@ -110,7 +110,7 @@ public/images/       photography (optimised JPGs)
 ## SEO
 
 - **Metadata.** Every page has its own title (`%s — the usual`), description and canonical URL. The home title leads with the brand name: *the usual — Coffee & 35g+ protein rolls at Mesa, Bengaluru*.
-- **Structured data** (`lib/seo.ts`): `WebSite` + `CafeOrCoffeeShop` (address, hours, price range, order action) on the home and Find us pages, a `Menu` with prices and protein per roll on `/menu`, and `FAQPage` on `/about`.
+- **Structured data** (`lib/seo.ts`): `WebSite` + `CafeOrCoffeeShop` (address, hours, price range, order action) on the home page, a `Menu` with prices and protein per roll on `/menu`, and `FAQPage` on `/about`.
 - **Crawling.** `app/sitemap.ts` and `app/robots.ts` are generated from `NEXT_PUBLIC_SITE_URL`. Order tracking, the kitchen board and the API are kept out of the index; `/order` stays indexable so “order the usual” searches land on it.
 - **Off-site, which matters most for a brand search.** “the usual” on its own is a common phrase, so the wins come from: your own domain, Google Search Console (submit `/sitemap.xml`), a Google Business Profile named *the usual* at RJ Twin Building with photos and hours, and the Instagram link in `lib/site.ts`. Searches like “the usual Mesa” or “the usual Bengaluru” are realistic first targets.
 
@@ -139,7 +139,7 @@ Keep the service at **one replica**: SQLite and the rate limiter live on that on
 
 - **Locations** in `lib/site.ts`: *Takeaway · RJ Twin Building* (walk up or order ahead) and *Pre-order · Mesa* (`preorderOnly`) are open; **both use placeholder hours (Mon–Sat 8am–6pm)**. The café is `status: 'soon'`, so it shows as “Opening soon” and can’t take orders. Switch it to `'open'` when it opens. Add `mapsUrl` to show a Directions button.
 - **Protein claim.** “35g+ protein in every roll” (80–100g paneer) lives in `lib/site.ts` (`protein`), `lib/menu.ts` (`protein: 35` on each roll) and the structured data in `lib/seo.ts`. Back it with a nutrition calculation or lab report before launch, and keep it in line with FSSAI labelling and claims rules.
-- **Email and Instagram** in `lib/site.ts` are blank. The footer links, the Find us email section and the Instagram `sameAs` link in the structured data appear once you fill them in.
+- **Email and Instagram** in `lib/site.ts` are blank. The footer links and the Instagram `sameAs` link in the structured data appear once you fill them in.
 - **Site address:** set `NEXT_PUBLIC_SITE_URL` to your live URL (your Railway address now, your own domain later) so link previews and the sitemap point to the right place.
 - **Option prices** (extras, sizes, dips, “make it lunch”) in `lib/menu.ts` are proposals. Item prices come from Menu No. 01.
 - **Merch prices** (Tee ₹799, Cap ₹599, Mug ₹449) in `lib/menu.ts` are placeholders. Merch is ordered through the app and picked up with food; the tote stays earned, not sold.

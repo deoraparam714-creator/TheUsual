@@ -8,7 +8,6 @@ const LINKS = [
   ['/about', 'About'],
   ['/merch', 'Merch'],
   ['/regulars', 'Regulars'],
-  ['/find-us', 'Find us'],
 ] as const;
 
 export function SiteFooter() {

@@ -38,7 +38,6 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scroll-padding-top: 5rem;
   }
   /* Slide-in reveals and the spinning badge never let the page pan sideways on phones.
      clip (not hidden) keeps position: sticky working. */

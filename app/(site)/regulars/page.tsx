@@ -25,28 +25,26 @@ const RULES = [
 export default function RegularsPage() {
   return (
     <>
-      <section className="pt-24 md:pt-36">
+      <section className="pt-28 md:pt-40">
         <Container>
           <Reveal fade>
             <Eyebrow>Regulars</Eyebrow>
           </Reveal>
-          <div className="mt-6 grid grid-cols-1 gap-8 md:mt-8 md:grid-cols-12 md:items-end">
-            <Lines
-              as="h1"
-              className="t-display md:col-span-8"
-              delay={100}
-              lines={[
-                'Regulars',
-                <>
-                  <span className="accent">welcome</span>
-                  <Dot />
-                </>,
-              ]}
-            />
-            <Reveal delay={300} className="md:col-span-4">
-              <p className="t-body-lg text-grind">We have regulars. Everyone else is a future regular. Here’s how the counting works.</p>
-            </Reveal>
-          </div>
+          <Lines
+            as="h1"
+            className="t-display mt-5 md:mt-8"
+            delay={100}
+            lines={[
+              'Regulars',
+              <>
+                <span className="accent">welcome</span>
+                <Dot />
+              </>,
+            ]}
+          />
+          <Reveal delay={300} className="mt-8 md:mt-12">
+            <p className="t-body-lg max-w-[40ch] text-grind">We have regulars. Everyone else is a future regular. Here’s how the counting works.</p>
+          </Reveal>
         </Container>
       </section>
 
@@ -54,7 +52,7 @@ export default function RegularsPage() {
         <Container className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
             <Reveal fade>
-              <Eyebrow n="01">The tally card</Eyebrow>
+              <Eyebrow>The tally card</Eyebrow>
             </Reveal>
             <h2 id="card-title" className="t-headline reveal mt-5 max-w-[12ch]">
               Fill five. The next one’s on us<Dot />
@@ -93,13 +91,13 @@ export default function RegularsPage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
             <div className="md:col-span-7">
               <Reveal fade>
-                <Eyebrow n="02" className="!text-milk/50">
+                <Eyebrow className="!text-milk/50">
                   The regulars’ wall
                 </Eyebrow>
               </Reveal>
               <Lines
                 id="wall-title"
-                className="t-display mt-6"
+                className="t-headline mt-5"
                 lines={[
                   'Your tally,',
                   <>

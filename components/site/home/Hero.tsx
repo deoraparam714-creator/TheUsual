@@ -36,7 +36,7 @@ export function Hero() {
             <ButtonLink href="/menu" variant="espresso" arrow>
               See the menu
             </ButtonLink>
-            <ButtonLink href="/find-us" variant="outline">
+            <ButtonLink href="/#find-us" variant="outline">
               Find us
             </ButtonLink>
           </Reveal>
@@ -44,7 +44,7 @@ export function Hero() {
       </Container>
 
       <Container className="relative mt-12 md:mt-16">
-        <ScrollTilt from={16}>
+        <ScrollTilt from={10}>
           <figure>
             <div className="img-reveal relative aspect-square overflow-hidden rounded-[18px] bg-toast sm:aspect-[16/10] lg:aspect-[16/8]" style={{ ['--delay' as string]: '200ms' }}>
               <div className="img-reveal-inner absolute inset-0">
@@ -63,7 +63,7 @@ export function Hero() {
             </div>
           </figure>
         </ScrollTilt>
-        <Reveal variant="zoom" delay={700} className="absolute -top-8 right-3 z-10 md:-top-10 md:right-14">
+        <Reveal variant="zoom" delay={700} className="absolute -top-8 right-4 z-10 md:-top-10 md:right-14">
           <ProteinBadge className="w-28 text-[12px] md:w-48 md:text-[19px]" />
         </Reveal>
       </Container>
@@ -81,7 +81,7 @@ export function Idea() {
           </Reveal>
           <Lines
             id="idea-title"
-            className="t-display mt-6"
+            className="t-headline mt-5"
             lines={[
               'A café for',
               <>

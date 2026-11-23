@@ -10,6 +10,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${site.url}/merch`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${site.url}/regulars`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${site.url}/find-us`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ];
 }

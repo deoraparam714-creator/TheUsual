@@ -17,28 +17,26 @@ export const metadata: Metadata = {
 export default function MerchPage() {
   return (
     <>
-      <section className="pt-24 md:pt-36">
+      <section className="pt-28 md:pt-40">
         <Container>
           <Reveal fade>
             <Eyebrow>Merch</Eyebrow>
           </Reveal>
-          <div className="mt-5 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-12 md:items-end">
-            <Lines
-              as="h1"
-              className="t-display md:col-span-8"
-              delay={100}
-              lines={[
-                'Take the usual',
-                <>
-                  <span className="accent">home</span>
-                  <Dot />
-                </>,
-              ]}
-            />
-            <Reveal delay={300} className="md:col-span-4">
-              <p className="t-body-lg text-grind">Small runs, the same lime dot. Add something to your order and pick it up with your usual. Pay at the counter.</p>
-            </Reveal>
-          </div>
+          <Lines
+            as="h1"
+            className="t-display mt-5 md:mt-8"
+            delay={100}
+            lines={[
+              'Take the usual',
+              <>
+                <span className="accent">home</span>
+                <Dot />
+              </>,
+            ]}
+          />
+          <Reveal delay={300} className="mt-8 md:mt-12">
+            <p className="t-body-lg max-w-[40ch] text-grind">Small runs, the same lime dot. Add something to your order and pick it up with your usual. Pay at the counter.</p>
+          </Reveal>
         </Container>
       </section>
 

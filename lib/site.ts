@@ -62,7 +62,7 @@ export const locations: Location[] = [
     kind: 'Pre-order',
     area: 'Mesa, Bengaluru',
     blurb: 'Order ahead in the app and your usual is ready for you at Mesa, name on the cup.',
-    how: 'Pre-order only. Pick a time, we’ll have it ready.',
+    how: 'Pick a pickup time in the app. We’ll have it ready, name on the cup.',
     // ⚠️ Placeholder hours: set the real ones.
     hours: { days: [1, 2, 3, 4, 5, 6], open: '08:00', close: '18:00' },
     status: 'open',
@@ -126,5 +126,4 @@ export const nav = [
   { href: '/about', label: 'About' },
   { href: '/merch', label: 'Merch' },
   { href: '/regulars', label: 'Regulars' },
-  { href: '/find-us', label: 'Find us' },
 ] as const;

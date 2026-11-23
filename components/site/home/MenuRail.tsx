@@ -47,7 +47,7 @@ export function MenuRail() {
           <Reveal variant="fade">
             <Eyebrow>The menu</Eyebrow>
           </Reveal>
-          <Lines id="menu-rail-title" className="t-display mt-5 lg:!text-[clamp(3.5rem,6.5vw,6.5rem)]" lines={[<>Lunch, sorted<Dot key="d" /></>]} />
+          <Lines id="menu-rail-title" className="t-headline mt-5" lines={[<>Lunch, sorted<Dot key="d" /></>]} />
           <Reveal delay={150}>
             <p className="t-body-lg mt-5 max-w-[40ch] text-grind">Rolls, fries, bowls and something to sip. Short menu, made properly, priced clearly.</p>
           </Reveal>

@@ -42,7 +42,7 @@ export function Protein() {
             {rolls.map((r, i) => (
               <Reveal as="li" key={r.id} variant="left" delay={200 + i * 90}>
                 <Link href={`/order?item=${r.id}`} className="group flex min-h-14 items-center justify-between gap-4 py-3">
-                  <span className="font-display text-xl font-semibold tracking-[-0.01em] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1">{r.name}</span>
+                  <span className="t-subhead transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1">{r.name}</span>
                   <span className="flex shrink-0 items-center gap-3 text-sm">
                     <span className="rounded-full bg-milk/10 px-2.5 py-1 font-semibold">35g+</span>
                     <span className="font-semibold tabular-nums">{inr(r.price)}</span>
@@ -63,7 +63,7 @@ export function Protein() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-toast">
               <Image src="/images/roll-chipotle-cheese.jpg" alt="Chipotle Cheese Roll cut in half, paneer and melted cheese stretching" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover object-[55%_50%]" />
             </div>
-            <div className="absolute -left-4 -top-6 z-20 rounded-full bg-lime px-4 py-2.5 font-display text-lg font-extrabold text-espresso shadow-lg md:-left-8 md:text-xl [transform:translateZ(60px)_rotate(-8deg)]">
+            <div className="absolute -top-5 left-2 z-20 rounded-full bg-lime px-4 py-2.5 font-display text-lg font-extrabold text-espresso shadow-lg md:-left-8 md:-top-6 md:text-xl [transform:translateZ(60px)_rotate(-8deg)]">
               35g+ protein
             </div>
           </Tilt3D>
@@ -72,7 +72,7 @@ export function Protein() {
 
       <div className="mt-20 space-y-2 pb-6 text-milk md:mt-28">
         <ScrollMarquee items={['35g+ protein', 'every roll', '100% veg']} />
-        <ScrollMarquee items={['pre-order by 11', 'lunch by 1', 'ready in 6 min']} reverse outline />
+        <ScrollMarquee items={['pre-order by 11', 'lunch by 1', 'ready in 6 min']} reverse muted />
       </div>
     </section>
   );
