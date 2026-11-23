@@ -79,7 +79,7 @@ export function SiteHeader() {
             <Logo variant="oneline" className="h-[22px] w-auto md:h-[26px]" decorative />
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-9 md:flex">
+          <nav aria-label="Main" className="hidden items-center gap-8 lg:flex xl:gap-9">
             {nav.map((item) => {
               const active = pathname === item.href;
               return (
@@ -94,7 +94,7 @@ export function SiteHeader() {
             </ButtonLink>
           </nav>
 
-          <div className="relative z-10 flex items-center gap-2 md:hidden">
+          <div className="relative z-10 flex items-center gap-2 lg:hidden">
             {!open && (
               <ButtonLink href="/order" variant="lime" size="sm" className="!min-h-10 px-4 text-[0.8125rem]">
                 Order
@@ -124,7 +124,7 @@ export function SiteHeader() {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="on-dark fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-espresso px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-20 text-milk md:hidden"
+            className="on-dark fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-espresso px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-20 text-milk lg:hidden"
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
             animate={{ clipPath: 'inset(0 0 0% 0)' }}
             exit={{ clipPath: 'inset(0 0 100% 0)' }}

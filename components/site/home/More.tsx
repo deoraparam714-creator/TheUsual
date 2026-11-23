@@ -1,11 +1,11 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { NameSticker } from '@/components/brand/NameSticker';
 import { Tally } from '@/components/brand/Tally';
 import { Lines } from '@/components/motion/Lines';
 import { Reveal } from '@/components/motion/Reveal';
 import { ButtonLink } from '@/components/ui/Button';
-import { locationHoursLabel, locations } from '@/lib/site';
+import { OpenStatus } from '@/components/site/OpenStatus';
+import { locationHoursLabel, openLocations } from '@/lib/site';
 import { Container, Dot, Eyebrow } from '../Section';
 
 const STEPS = [
@@ -21,7 +21,7 @@ export function Ritual() {
         <div className="grid grid-cols-[1fr_auto] items-end gap-6 md:grid-cols-12">
           <div className="md:col-span-8">
             <Reveal fade>
-              <Eyebrow n="04" className="!text-milk/50">
+              <Eyebrow className="!text-milk/50">
                 How it works
               </Eyebrow>
             </Reveal>
@@ -69,84 +69,61 @@ export function Ritual() {
   );
 }
 
-export function Places() {
+/** Text-only: where and how to get your usual. */
+export function FindUs() {
+  const ways = openLocations;
   return (
-    <section className="py-20 md:py-36" aria-labelledby="places-title">
+    <section className="py-20 md:py-32" aria-labelledby="find-title">
       <Container>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
-            <Reveal fade>
-              <Eyebrow n="05">Find us</Eyebrow>
+            <Reveal variant="fade">
+              <Eyebrow>Find us</Eyebrow>
             </Reveal>
             <Lines
-              id="places-title"
-              className="t-display mt-6"
+              id="find-title"
+              className="t-display mt-5"
               lines={[
-                'Somewhere',
+                'Find us',
                 <>
-                  to <span className="accent">land</span>
+                  at <span className="accent">Mesa</span>
                   <Dot />
                 </>,
               ]}
             />
           </div>
           <Reveal className="md:col-span-4 md:col-start-9" delay={150}>
-            <p className="t-body-lg text-grind">Between classes, calls and catch-ups. Takeaway from RJ Twin Building today, and a café of our own soon.</p>
+            <p className="t-body-lg text-grind">Two ways to get your usual. Walk up to the counter, or order ahead and it’s ready when you are.</p>
           </Reveal>
         </div>
-        <ul className="mt-10 grid grid-cols-2 gap-3 md:mt-20 md:gap-6" aria-label="Locations">
-          {locations.map((l, i) => (
-            <Reveal as="li" key={l.id} delay={i * 120}>
-              <PlaceCard l={l} />
+        <ul className="mt-10 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
+          {ways.map((l, i) => (
+            <Reveal as="li" key={l.id} variant={i % 2 ? 'right' : 'left'} delay={i * 120}>
+              <Link href={`/order?location=${l.id}`} className="group flex h-full flex-col rounded-[22px] bg-foam p-6 transition-colors duration-500 hover:bg-toast md:p-10">
+                <span className="t-label text-grind">
+                  {String(i + 1).padStart(2, '0')} · {l.kind}
+                </span>
+                <h3 className="mt-8 font-display text-[clamp(2rem,6vw,3.25rem)] font-extrabold leading-none tracking-[-0.03em] md:mt-14">
+                  {l.kind === 'Takeaway' ? `Takeaway from ${l.name}` : `Pre-order at ${l.name}`}
+                  <Dot />
+                </h3>
+                <p className="mt-4 max-w-[38ch] text-grind">{l.how}</p>
+                <OpenStatus locationId={l.id} className="mt-3 text-xs text-grind" />
+                <div className="mt-8 flex items-center justify-between gap-4 border-t border-line pt-5 text-sm md:mt-12">
+                  <span className="text-grind">{locationHoursLabel(l)}</span>
+                  <span className="inline-flex min-h-11 items-center gap-1 font-semibold">
+                    {l.preorderOnly ? 'Pre-order' : 'Order ahead'} <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+                  </span>
+                </div>
+              </Link>
             </Reveal>
           ))}
         </ul>
+        <Reveal variant="fade" className="mt-6">
+          <p className="text-sm text-grind">A café of our own is opening soon. Regulars hear first.</p>
+        </Reveal>
       </Container>
     </section>
-  );
-}
-
-function PlaceCard({ l }: { l: (typeof locations)[number] }) {
-  const soon = l.status === 'soon';
-  const body = (
-    <>
-      <div className="img-reveal relative aspect-[3/4] overflow-hidden rounded-[18px] bg-toast md:aspect-[4/3]">
-        <div className="img-reveal-inner absolute inset-0">
-          <Image
-            src={l.image}
-            alt={l.imageAlt}
-            fill
-            sizes="(min-width: 768px) 48vw, 50vw"
-            className={['object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-expo)]', soon ? 'grayscale-[35%]' : 'group-hover:scale-[1.04]'].join(' ')}
-          />
-        </div>
-        {soon && (
-          <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-milk px-3 py-1.5 text-xs font-semibold text-espresso">
-            <span className="size-1.5 rounded-full bg-grind" aria-hidden />
-            Opening soon
-          </span>
-        )}
-      </div>
-      <div className="mt-4 flex flex-col gap-1 md:mt-5 md:flex-row md:items-start md:justify-between md:gap-4">
-        <div>
-          <p className="t-label text-grind">{l.kind}</p>
-          <h3 className="mt-2 font-display text-lg font-extrabold leading-tight tracking-[-0.02em] md:text-[2rem]">{l.name}</h3>
-          <p className="mt-1 text-sm text-grind md:mt-2 md:text-[0.9375rem]">{locationHoursLabel(l)}</p>
-        </div>
-        {!soon && (
-          <span className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold md:mt-1">
-            Order here <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-          </span>
-        )}
-      </div>
-    </>
-  );
-  return soon ? (
-    <div>{body}</div>
-  ) : (
-    <Link href={`/order?location=${l.id}`} className="group block">
-      {body}
-    </Link>
   );
 }
 

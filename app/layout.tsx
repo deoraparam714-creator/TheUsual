@@ -12,16 +12,21 @@ const caveat = Caveat({ subsets: ['latin'], variable: '--font-caveat', display: 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: 'the usual — Coffee, rolls & bowls in Bengaluru',
+    default: 'the usual — Coffee & 35g+ protein rolls at Mesa, Bengaluru',
     template: '%s — the usual',
   },
   description: site.description,
   applicationName: 'the usual',
-  keywords: ['café', 'Bengaluru', 'coffee', 'paneer rolls', 'bowls', 'vegetarian', 'pre-order', 'the usual'],
+  keywords: ['the usual', 'the usual café', 'the usual Mesa', 'the usual Bengaluru', 'high protein rolls', 'paneer rolls', 'protein paneer roll', 'Mesa School of Business café', 'RJ Twin Building', 'coffee Bengaluru', 'vegetarian café Bengaluru'],
+  authors: [{ name: 'the usual' }],
+  creator: 'the usual',
+  category: 'food',
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   openGraph: {
     type: 'website',
     siteName: 'the usual',
     locale: 'en_IN',
+    url: '/',
     title: 'the usual — Everyone has a usual.',
     description: site.description,
   },

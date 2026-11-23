@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
-const SELECTOR = '.reveal, .reveal-fade, .img-reveal, .line-mask, .tally-draw';
+const SELECTOR = '.reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-tilt, .reveal-zoom, .img-reveal, .line-mask, .tally-draw';
 
 /**
  * One IntersectionObserver for the whole app. Adds `.is-in` to reveal elements

@@ -5,7 +5,7 @@ import { create } from 'zustand';
 import { ItemImage } from '@/components/menu/ItemImage';
 import { Button } from '@/components/ui/Button';
 import { inr } from '@/lib/format';
-import type { MenuItem } from '@/lib/menu';
+import { type MenuItem, proteinLabel } from '@/lib/menu';
 import { normalizeOptions, priceLine } from '@/lib/pricing';
 import { useCart } from '@/store/cart';
 import { Sheet } from './Sheet';
@@ -47,7 +47,10 @@ function Body({ item }: { item: MenuItem }) {
       <ItemImage item={item} sizes="(min-width: 768px) 560px, 100vw" className="aspect-[4/3] w-full md:aspect-[16/10]" preload />
       <div className="px-4 pb-6 pt-6 md:px-6">
         <div className="flex items-start justify-between gap-4">
-          <h2 className="t-title">{item.name}</h2>
+          <div>
+            <h2 className="t-title">{item.name}</h2>
+            {item.protein ? <p className="mt-2 inline-flex rounded-full bg-lime px-3 py-1 text-xs font-bold text-espresso">{proteinLabel(item)} · 80–100g paneer</p> : null}
+          </div>
           <p className="pt-1 font-display text-xl font-semibold tabular-nums">{inr(item.price)}</p>
         </div>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-grind">{item.long}</p>

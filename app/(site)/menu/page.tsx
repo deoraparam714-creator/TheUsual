@@ -10,32 +10,16 @@ import { categories as allCategories, itemsIn, menu } from '@/lib/menu';
 
 const categories = allCategories.filter((c) => c.id !== 'merch');
 const foodCount = menu.filter((m) => m.category !== 'merch').length;
-import { site } from '@/lib/site';
+import { menuJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Menu',
-  description: 'Rolls, fries, bowls and drinks at the usual, Bengaluru. 100% vegetarian, prices in ₹. Order ahead for pickup.',
+  title: 'Menu: high-protein paneer rolls, fries, bowls & coffee',
+  description: 'The usual menu: high-protein paneer rolls with 35g+ protein, fries, bowls, cold coffee and hot chocolate at Mesa, Bengaluru. 100% vegetarian, prices in ₹. Order ahead for pickup.',
   alternates: { canonical: '/menu' },
 };
 
 export default function MenuPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Menu',
-    name: 'the usual — Menu No. 01',
-    url: `${site.url}/menu`,
-    hasMenuSection: categories.map((c) => ({
-      '@type': 'MenuSection',
-      name: c.title,
-      hasMenuItem: itemsIn(c.id).map((i) => ({
-        '@type': 'MenuItem',
-        name: i.name,
-        description: i.description,
-        suitableForDiet: 'https://schema.org/VegetarianDiet',
-        offers: { '@type': 'Offer', price: i.price, priceCurrency: 'INR' },
-      })),
-    })),
-  };
+  const jsonLd = menuJsonLd();
 
   return (
     <>
@@ -64,7 +48,7 @@ export default function MenuPage() {
               ]}
             />
             <Reveal delay={300} className="md:col-span-4">
-              <p className="t-body-lg text-grind">100% vegetarian. All prices in ₹. Ask for your name on the cup — or skip the asking and order ahead.</p>
+              <p className="t-body-lg text-grind">35g+ protein in every roll. 100% vegetarian, prices in ₹. Ask for your name on the cup, or skip the queue and order ahead.</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <ButtonLink href="/order" variant="espresso" arrow>
                   Order ahead

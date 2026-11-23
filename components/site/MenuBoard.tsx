@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ItemImage } from '@/components/menu/ItemImage';
 import { inr } from '@/lib/format';
-import type { Category, MenuItem } from '@/lib/menu';
+import { type Category, type MenuItem, proteinLabel } from '@/lib/menu';
 
 /**
  * One category of the text-first menu. On desktop a sticky photo panel shows
@@ -47,7 +47,10 @@ export function MenuBoard({ category, items, index }: { category: Category; item
                 <div className="flex min-w-0 items-center gap-4">
                   <ItemImage item={item} sizes="80px" compact className="size-[72px] shrink-0 rounded-[10px] md:hidden" />
                   <div className="min-w-0">
-                    <h3 className="font-display text-[1.375rem] font-semibold leading-tight tracking-[-0.01em] md:text-[1.75rem]">{item.name}</h3>
+                    <h3 className="font-display text-[1.375rem] font-semibold leading-tight tracking-[-0.01em] md:text-[1.75rem]">
+                      {item.name}
+                      {item.protein ? <span className="ml-2 inline-flex translate-y-[-2px] items-center rounded-full bg-lime px-2 py-0.5 align-middle font-sans text-[0.6875rem] font-bold tracking-normal text-espresso">{proteinLabel(item)}</span> : null}
+                    </h3>
                     <p className="mt-1 text-[0.9375rem] text-grind">{item.description}</p>
                   </div>
                 </div>

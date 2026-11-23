@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { OrderHeader } from '@/components/order/OrderHeader';
 
 export const metadata: Metadata = {
-  title: { default: 'Order ahead', template: '%s — the usual' },
-  description: 'Order your usual ahead for pickup. Rolls, fries, bowls and drinks, your name on the cup.',
+  title: { default: 'Order ahead for pickup at Mesa', template: '%s — the usual' },
+  description: 'Order your usual ahead: 35g+ protein paneer rolls, fries, bowls and coffee. Takeaway from RJ Twin Building or pre-order at Mesa, your name on the cup.',
   alternates: { canonical: '/order' },
 };
 

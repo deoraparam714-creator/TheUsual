@@ -236,7 +236,7 @@ export function Checkout() {
                   >
                     <span>
                       <span className="block font-semibold">As soon as it’s ready</span>
-                      <span className="mt-0.5 block text-sm text-grind">{plan.asapAvailable && plan.asapReadyAt ? `Ready in ${prep} min · around ${istTime(plan.asapReadyAt)}` : `${location.name} is closed right now`}</span>
+                      <span className="mt-0.5 block text-sm text-grind">{plan.asapAvailable && plan.asapReadyAt ? `Ready in ${prep} min · around ${istTime(plan.asapReadyAt)}` : location.preorderOnly ? `${location.name} is pre-order only. Pick a time below.` : `${location.name} is closed right now`}</span>
                     </span>
                     <Radio on={pickup?.type === 'asap'} />
                   </button>

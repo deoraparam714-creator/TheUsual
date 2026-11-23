@@ -10,8 +10,10 @@ export const site = {
   descriptor: 'Coffee, rolls & bowls',
   signOff: 'Same time tomorrow?',
   city: 'Bengaluru',
+  campus: 'Mesa',
+  protein: '35g+ protein in every roll',
   description:
-    'the usual is a neighbourhood café in Bengaluru for coffee, rolls and bowls. Pre-order by 11, lunch by 1, your name on the cup.',
+    'the usual: coffee, high-protein paneer rolls and bowls at Mesa, Bengaluru. 35g+ protein in every roll, 100% vegetarian. Takeaway from RJ Twin Building or pre-order at Mesa, your name on the cup.',
   // Contact links only appear on the site once these are filled in.
   email: '' as string,
   instagram: { handle: '' as string, url: '' as string },
@@ -32,12 +34,14 @@ export type Location = {
   area: string;
   blurb: string;
   hours: Hours;
-  image: string;
-  imageAlt: string;
+  /** One short line on how it works there. */
+  how: string;
   /** Optional Google Maps link. Hidden when not set. */
   mapsUrl?: string;
   /** "soon" locations are listed but can't take orders yet. */
   status: 'open' | 'soon';
+  /** Pre-order only: no "as soon as it's ready", pick a time. */
+  preorderOnly?: boolean;
 };
 
 export const locations: Location[] = [
@@ -46,12 +50,23 @@ export const locations: Location[] = [
     name: 'RJ Twin Building',
     kind: 'Takeaway',
     area: 'RJ Twin Building, Bengaluru',
-    blurb: 'Our takeaway counter. Order ahead and your usual is waiting, name on the cup.',
+    blurb: 'Walk up to the counter, or order ahead and skip the queue.',
+    how: 'Walk up, or order ahead. Ready in about 6 minutes.',
     // ⚠️ Placeholder hours: set the real ones.
     hours: { days: [1, 2, 3, 4, 5, 6], open: '08:00', close: '18:00' },
-    image: '/images/location-campus.jpg',
-    imageAlt: 'People picking up orders at the usual takeaway counter',
     status: 'open',
+  },
+  {
+    id: 'mesa',
+    name: 'Mesa',
+    kind: 'Pre-order',
+    area: 'Mesa, Bengaluru',
+    blurb: 'Order ahead in the app and your usual is ready for you at Mesa, name on the cup.',
+    how: 'Pre-order only. Pick a time, we’ll have it ready.',
+    // ⚠️ Placeholder hours: set the real ones.
+    hours: { days: [1, 2, 3, 4, 5, 6], open: '08:00', close: '18:00' },
+    status: 'open',
+    preorderOnly: true,
   },
   {
     id: 'cafe',
@@ -59,9 +74,8 @@ export const locations: Location[] = [
     kind: 'Café',
     area: 'Bengaluru',
     blurb: 'A room of our own: the long table, the window bench and the regulars’ wall.',
+    how: 'Opening soon. Regulars hear first.',
     hours: { days: [0, 1, 2, 3, 4, 5, 6], open: '08:00', close: '22:00' },
-    image: '/images/location-cafe.jpg',
-    imageAlt: 'Two regulars on the bench outside the usual café with cups in hand',
     status: 'soon',
   },
 ];
@@ -109,6 +123,7 @@ export function formatHours(hours: Hours): string {
 
 export const nav = [
   { href: '/menu', label: 'Menu' },
+  { href: '/about', label: 'About' },
   { href: '/merch', label: 'Merch' },
   { href: '/regulars', label: 'Regulars' },
   { href: '/find-us', label: 'Find us' },

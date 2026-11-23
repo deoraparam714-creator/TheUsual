@@ -54,7 +54,7 @@ export function planSlots(location: Location, now: Date = new Date(), prepMin = 
   const p = istParts(now);
 
   const openNow = isOpenDay(hours, p.dow) && p.minutes >= open && p.minutes < close;
-  const asapAvailable = openNow && p.minutes + prepMin <= close;
+  const asapAvailable = !location.preorderOnly && openNow && p.minutes + prepMin <= close;
   const asapReadyAt = asapAvailable ? new Date(Math.ceil((now.getTime() + prepMin * 60_000) / 60_000) * 60_000).toISOString() : null;
 
   const slots: Slot[] = [];

@@ -40,6 +40,12 @@
     -moz-osx-font-smoothing: grayscale;
     scroll-padding-top: 5rem;
   }
+  /* Slide-in reveals and the spinning badge never let the page pan sideways on phones.
+     clip (not hidden) keeps position: sticky working. */
+  html,
+  body {
+    overflow-x: clip;
+  }
   body {
     background: var(--color-milk);
     color: var(--color-espresso);
@@ -186,6 +192,48 @@ html.js .reveal-fade.is-in {
   opacity: 1;
 }
 
+/* Directional and 3D reveals, so not everything rises from below */
+html.js .reveal-left,
+html.js .reveal-right,
+html.js .reveal-tilt,
+html.js .reveal-zoom {
+  opacity: 0;
+  transition:
+    opacity 1.1s var(--ease-out-expo),
+    transform 1.4s var(--ease-out-expo);
+  transition-delay: var(--delay, 0ms);
+  will-change: opacity, transform;
+}
+html.js .reveal-left {
+  transform: translate3d(-64px, 0, 0);
+}
+html.js .reveal-right {
+  transform: translate3d(64px, 0, 0);
+}
+html.js .reveal-tilt {
+  transform: perspective(1000px) rotateX(22deg) translate3d(0, 48px, 0);
+  transform-origin: 50% 100%;
+}
+html.js .reveal-zoom {
+  transform: scale(0.9);
+}
+html.js .reveal-left.is-in,
+html.js .reveal-right.is-in,
+html.js .reveal-tilt.is-in,
+html.js .reveal-zoom.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin 24s linear infinite;
+}
+
 /* Masked line reveal for headlines */
 .line-mask {
   display: block;
@@ -297,6 +345,10 @@ html.js .tally-draw.is-in .tally-stroke {
 @media (prefers-reduced-motion: reduce) {
   html.js .reveal,
   html.js .reveal-fade,
+  html.js .reveal-left,
+  html.js .reveal-right,
+  html.js .reveal-tilt,
+  html.js .reveal-zoom,
   html.js .line-mask > .line-inner,
   html.js .img-reveal > .img-reveal-inner,
   html.js .tally-draw .tally-stroke {
@@ -307,7 +359,8 @@ html.js .tally-draw.is-in .tally-stroke {
     transition: none !important;
   }
   .marquee-track,
-  .pulse-dot {
+  .pulse-dot,
+  .spin-slow {
     animation: none;
   }
 }

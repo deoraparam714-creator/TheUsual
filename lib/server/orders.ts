@@ -92,7 +92,7 @@ export function createOrder(raw: unknown, now: Date = new Date()): PublicOrder {
   let pickupAt: string;
   if (input.pickup.type === 'asap') {
     const plan = planSlots(location, now, prep);
-    if (!plan.asapAvailable || !plan.asapReadyAt) throw new OrderError(`${location.name} is closed right now. Pick a later time?`, 409);
+    if (!plan.asapAvailable || !plan.asapReadyAt) throw new OrderError(location.preorderOnly ? `${location.name} is pre-order only. Pick a time?` : `${location.name} is closed right now. Pick a later time?`, 409);
     pickupAt = plan.asapReadyAt;
   } else {
     if (!isValidSlot(location, input.pickup.at, now, prep)) throw new OrderError('That pickup time just went. Pick another?', 409);

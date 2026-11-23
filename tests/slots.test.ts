@@ -4,6 +4,7 @@ import { isValidSlot, istDayKey, planSlots } from '@/lib/slots';
 
 const takeaway = getLocation('rj-twin')!; // Mon–Sat 08:00–18:00
 const cafe = getLocation('cafe')!; // daily 08:00–22:00
+const mesa = getLocation('mesa')!; // pre-order only, Mon–Sat 08:00–18:00
 
 // Helper: an instant given as IST wall-clock time.
 const ist = (s: string) => new Date(`${s}+05:30`);
@@ -25,6 +26,13 @@ describe('pickup slots (IST)', () => {
     // First scheduled slot leaves room for prep + 5 min, rounded to 15.
     expect(p.slots[0].at).toBe(ist('2026-11-23T10:45:00').toISOString());
     expect(p.slots.at(-1)?.dayLabel).toBe('Tomorrow');
+  });
+
+  it('never offers ASAP at a pre-order-only location, but still has slots', () => {
+    const p = planSlots(mesa, ist('2026-11-23T10:30:00'), 6);
+    expect(p.openNow).toBe(true);
+    expect(p.asapAvailable).toBe(false);
+    expect(p.slots[0].at).toBe(ist('2026-11-23T10:45:00').toISOString());
   });
 
   it('stops ASAP when there is no time to make it before close', () => {

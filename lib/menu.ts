@@ -32,12 +32,16 @@ export type MenuItem = {
   options: OptionGroup[];
   /** Base minutes to make one. */
   prep: number;
+  /** Minimum grams of protein per serving, where we make a claim. */
+  protein?: number;
 };
+
+export const proteinLabel = (item: Pick<MenuItem, 'protein'>) => (item.protein ? `${item.protein}g+ protein` : null);
 
 export type Category = { id: CategoryId; title: string; blurb: string };
 
 export const categories: Category[] = [
-  { id: 'rolls', title: 'Rolls', blurb: 'Grilled roti, real paneer, built to eat with one hand.' },
+  { id: 'rolls', title: 'Rolls', blurb: '80–100g of paneer and 35g+ protein in every roll. Built to eat with one hand.' },
   { id: 'fries', title: 'Fries', blurb: 'Thick-cut, double-fried, salted right.' },
   { id: 'bowls', title: 'Bowls', blurb: 'The same fillings over rice. Lunch, sorted.' },
   { id: 'drinks', title: 'Drinks', blurb: 'Cold, hot, or somewhere sweet in between.' },
@@ -170,6 +174,7 @@ export const menu: MenuItem[] = [
     imagePosition: '58% 50%',
     options: [spice, rollExtras, side],
     prep: 6,
+    protein: 35,
   },
   {
     id: 'makhani-dunk',
@@ -182,6 +187,7 @@ export const menu: MenuItem[] = [
     imageAlt: 'Makhani Dunk roll halves with a pot of makhani gravy',
     options: [spice, rollExtras, side],
     prep: 6,
+    protein: 35,
   },
   {
     id: 'chipotle-cheese-roll',
@@ -195,6 +201,7 @@ export const menu: MenuItem[] = [
     imagePosition: '52% 50%',
     options: [spice, rollExtras, side],
     prep: 7,
+    protein: 35,
   },
   // ── Fries
   {

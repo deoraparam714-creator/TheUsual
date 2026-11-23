@@ -42,6 +42,8 @@ describe('orders repository', () => {
     expect(() => m.createOrder(base({ phone: '12345' }), NOW)).toThrow('10-digit');
     expect(() => m.createOrder(base({ locationId: 'mars' }), NOW)).toThrow('don’t have a counter');
     expect(() => m.createOrder(base({ locationId: 'cafe' }), NOW)).toThrow('not open there yet');
+    expect(() => m.createOrder(base({ locationId: 'mesa' }), NOW)).toThrow('pre-order only');
+    expect(m.createOrder(base({ locationId: 'mesa', phone: '9333333333', pickup: { type: 'scheduled', at: ist('2026-11-23T12:00:00').toISOString() } }), NOW).locationId).toBe('mesa');
     expect(() => m.createOrder(base({ locationId: 'airport' }), NOW)).toThrow();
     expect(() => m.createOrder(base(), ist('2026-11-23T02:00:00'))).toThrow('closed');
   });

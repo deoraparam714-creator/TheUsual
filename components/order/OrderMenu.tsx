@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { useHydrated } from '@/hooks/useHydrated';
 import { useRegular, useSlots } from '@/hooks/useOrderData';
 import { greeting, inr, istTime, istWeekday } from '@/lib/format';
-import { categories, itemsIn, type MenuItem, menuById } from '@/lib/menu';
+import { categories, itemsIn, type MenuItem, menuById, proteinLabel } from '@/lib/menu';
 import { describeLines, type LineInput, priceLine, prepMinutes } from '@/lib/pricing';
 import { getOrderableLocation, openLocations } from '@/lib/site';
 import { tallyMessage } from '@/lib/tally';
@@ -114,12 +114,15 @@ export function OrderMenu({ initialItem, initialLocation }: { initialItem?: stri
   };
 
   const firstSlot = plan?.slots[0];
+  const whenFirst = firstSlot ? `${istTime(firstSlot.at)}${firstSlot.dayLabel === 'Today' ? '' : ` ${firstSlot.dayLabel.toLowerCase() === 'tomorrow' ? 'tomorrow' : istWeekday(firstSlot.at)}`}` : '';
   const timingLine = plan
     ? plan.asapAvailable && plan.asapReadyAt
       ? `Ready around ${istTime(plan.asapReadyAt)}`
-      : firstSlot
-        ? `${location.name} is closed. Pre-order from ${istTime(firstSlot.at)}${firstSlot.dayLabel === 'Today' ? '' : ` ${firstSlot.dayLabel.toLowerCase() === 'tomorrow' ? 'tomorrow' : istWeekday(firstSlot.at)}`}.`
-        : `${location.name} is closed for now.`
+      : location.preorderOnly && plan.openNow && firstSlot
+        ? `${location.name} is pre-order only. Earliest pickup ${whenFirst}.`
+        : firstSlot
+          ? `${location.name} is closed. Pre-order from ${whenFirst}.`
+          : `${location.name} is closed for now.`
     : '';
 
   return (
@@ -286,7 +289,10 @@ function MenuRow({ item, qty, onOpen }: { item: MenuItem; qty: number; onOpen: (
         {qty > 0 && <span className="absolute -right-1.5 -top-1.5 grid h-6 min-w-6 place-items-center rounded-full bg-lime px-1.5 text-xs font-bold text-espresso">{qty}</span>}
       </span>
       <span className="block min-w-0 flex-1">
-        <span className="block text-[1.0625rem] font-semibold leading-snug">{item.name}</span>
+        <span className="block text-[1.0625rem] font-semibold leading-snug">
+          {item.name}
+          {item.protein ? <span className="ml-2 inline-flex translate-y-[-2px] items-center rounded-full bg-lime px-2 py-0.5 align-middle font-sans text-[0.6875rem] font-bold tracking-normal text-espresso">{proteinLabel(item)}</span> : null}
+        </span>
         <span className="mt-0.5 line-clamp-2 block text-sm text-grind">{item.description}</span>
         <span className="mt-2 block font-semibold tabular-nums">{inr(item.price)}</span>
       </span>

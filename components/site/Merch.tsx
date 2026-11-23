@@ -37,7 +37,7 @@ export function MerchTile({ item, sizes, compact = false }: { item: MerchCard; s
 }
 
 /** Home page: a small strip, not a store. */
-export function MerchTeaser({ n = '06' }: { n?: string }) {
+export function MerchTeaser({ n }: { n?: string }) {
   return (
     <section className="border-t border-line py-16 md:py-28" aria-labelledby="merch-teaser-title">
       <Container>
