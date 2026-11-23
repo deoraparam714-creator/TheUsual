@@ -129,7 +129,7 @@ Keep the service at **one replica**: SQLite and the rate limiter live on that on
 
 ## Before launch: replace placeholders
 
-- **Locations, addresses and hours** in `lib/site.ts` are placeholders. Add `mapsUrl` to show a Directions button.
+- **Locations** in `lib/site.ts`: the RJ Twin Building takeaway is open (hours are placeholders); the café is `status: 'soon'`, so it shows as “Opening soon” and can’t take orders. Switch it to `'open'` when it opens. Add `mapsUrl` to show a Directions button.
 - **Email and Instagram** in `lib/site.ts` are blank. The footer links and the “A cart for your campus” section appear once you fill them in.
 - **Site address:** set `NEXT_PUBLIC_SITE_URL` to your live URL (your Railway address now, your own domain later) so link previews and the sitemap point to the right place.
 - **Option prices** (extras, sizes, dips, “make it lunch”) in `lib/menu.ts` are proposals. Item prices come from Menu No. 01.

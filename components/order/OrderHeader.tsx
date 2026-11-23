@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/brand/Logo';
 import { OpenStatus } from '@/components/site/OpenStatus';
 import { useHydrated } from '@/hooks/useHydrated';
-import { formatHours, getLocation, locations } from '@/lib/site';
+import { getOrderableLocation, locationHoursLabel, locations, openLocations } from '@/lib/site';
 import { cartCount, useCart } from '@/store/cart';
 import { useOrderUI } from '@/store/ui';
 import { BagIcon, Chevron, Toaster } from './bits';
@@ -19,7 +19,7 @@ export function OrderHeader() {
   const locationId = useCart((s) => s.locationId);
   const setLocation = useCart((s) => s.setLocation);
   const { cartOpen, setCartOpen, locationOpen, setLocationOpen } = useOrderUI();
-  const location = getLocation(locationId) ?? locations[0];
+  const location = getOrderableLocation(locationId) ?? openLocations[0];
   const count = hydrated ? cartCount(lines) : 0;
   const onMenu = pathname === '/order';
   const onTrack = pathname.startsWith('/order/track');
@@ -66,22 +66,24 @@ export function OrderHeader() {
           <ul className="mt-6 space-y-3">
             {locations.map((l) => {
               const active = l.id === location.id;
+              const soon = l.status === 'soon';
               return (
                 <li key={l.id}>
                   <button
                     type="button"
+                    disabled={soon}
                     onClick={() => {
                       setLocation(l.id);
                       setLocationOpen(false);
                     }}
                     aria-pressed={active}
-                    className={['flex w-full items-start justify-between gap-4 rounded-[18px] border p-4 text-left transition-colors', active ? 'border-espresso bg-foam' : 'border-line hover:border-line-strong'].join(' ')}
+                    className={['flex w-full items-start justify-between gap-4 rounded-[18px] border p-4 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-55', active ? 'border-espresso bg-foam' : 'border-line hover:border-line-strong'].join(' ')}
                   >
                     <span>
                       <span className="t-label block text-grind">{l.kind}</span>
                       <span className="mt-1 block font-display text-xl font-semibold">{l.name}</span>
-                      <span className="mt-1 block text-sm text-grind">{formatHours(l.hours)}</span>
-                      <OpenStatus locationId={l.id} className="mt-2" />
+                      <span className="mt-1 block text-sm text-grind">{locationHoursLabel(l)}</span>
+                      {!soon && <OpenStatus locationId={l.id} className="mt-2" />}
                     </span>
                     <span aria-hidden className={['mt-1 grid size-6 shrink-0 place-items-center rounded-full border-[1.5px]', active ? 'border-espresso bg-espresso' : 'border-line-strong'].join(' ')}>
                       {active && <span className="size-2 rounded-full bg-lime" />}

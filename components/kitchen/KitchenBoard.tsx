@@ -7,7 +7,7 @@ import { NameSticker } from '@/components/brand/NameSticker';
 import { istTime, minutesAgo, padOrderNumber } from '@/lib/format';
 import type { OrderStatus } from '@/lib/schemas';
 import type { KitchenOrder } from '@/lib/server/orders';
-import { getLocation, locations } from '@/lib/site';
+import { getLocation, openLocations } from '@/lib/site';
 
 type Session = 'loading' | 'out' | 'in' | 'unconfigured';
 
@@ -132,7 +132,7 @@ export function KitchenBoard() {
             <span className="t-label text-milk/50">Kitchen</span>
           </div>
           <div className="no-scrollbar flex gap-1 overflow-x-auto">
-            {[{ id: 'all', name: 'All' }, ...locations].map((l) => (
+            {[{ id: 'all', name: 'All' }, ...openLocations].map((l) => (
               <button key={l.id} type="button" onClick={() => setLoc(l.id)} aria-pressed={loc === l.id} className={['min-h-10 shrink-0 rounded-full px-4 text-sm transition-colors', loc === l.id ? 'bg-milk text-espresso' : 'text-milk/70 hover:bg-milk/10'].join(' ')}>
                 {l.name}
               </button>

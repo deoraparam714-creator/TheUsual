@@ -6,11 +6,11 @@ import { OpenStatus } from '@/components/site/OpenStatus';
 import { Container, Dot, Eyebrow } from '@/components/site/Section';
 import { SignOff } from '@/components/site/SignOff';
 import { ButtonLink } from '@/components/ui/Button';
-import { formatHours, locations, site } from '@/lib/site';
+import { locationHoursLabel, locations, site } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Find us',
-  description: 'A cart on campus, a café in town and a kiosk at the airport. Hours and pickup for every the usual in Bengaluru.',
+  description: 'Takeaway from RJ Twin Building, with a café of our own opening soon. Hours and pickup for the usual in Bengaluru.',
   alternates: { canonical: '/find-us' },
 };
 
@@ -28,15 +28,15 @@ export default function FindUsPage() {
               className="t-display md:col-span-8"
               delay={100}
               lines={[
-                'Same roll,',
+                'Come find',
                 <>
-                  <span className="accent">everywhere</span>
+                  <span className="accent">us</span>
                   <Dot />
                 </>,
               ]}
             />
             <Reveal delay={300} className="md:col-span-4">
-              <p className="t-body-lg text-grind">A cart on campus, a café in town, a kiosk at the airport. Order ahead from any of them and your name’s on the cup when you arrive.</p>
+              <p className="t-body-lg text-grind">Takeaway from RJ Twin Building, and a café of our own on the way. Order ahead and your name’s on the cup when you arrive.</p>
             </Reveal>
           </div>
         </Container>
@@ -67,16 +67,27 @@ export default function FindUsPage() {
                     <dt className="text-grind">Where</dt>
                     <dd>{l.area}</dd>
                     <dt className="text-grind">Hours</dt>
-                    <dd>{formatHours(l.hours)}</dd>
-                    <dt className="text-grind">Right now</dt>
-                    <dd>
-                      <OpenStatus locationId={l.id} />
-                    </dd>
+                    <dd>{locationHoursLabel(l)}</dd>
+                    {l.status === 'open' && (
+                      <>
+                        <dt className="text-grind">Right now</dt>
+                        <dd>
+                          <OpenStatus locationId={l.id} />
+                        </dd>
+                      </>
+                    )}
                   </dl>
                   <div className="mt-8 flex flex-wrap gap-3">
-                    <ButtonLink href={`/order?location=${l.id}`} variant="espresso" arrow>
-                      Order for pickup here
-                    </ButtonLink>
+                    {l.status === 'open' ? (
+                      <ButtonLink href={`/order?location=${l.id}`} variant="espresso" arrow>
+                        Order for pickup here
+                      </ButtonLink>
+                    ) : (
+                      <p className="inline-flex min-h-12 items-center gap-2 rounded-full bg-toast px-5 text-sm font-semibold">
+                        <span className="size-1.5 rounded-full bg-grind" aria-hidden />
+                        Opening soon. Regulars hear first.
+                      </p>
+                    )}
                     {l.mapsUrl && (
                       <ButtonLink href={l.mapsUrl} variant="outline" target="_blank" rel="noreferrer">
                         Directions

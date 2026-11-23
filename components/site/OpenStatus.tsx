@@ -11,6 +11,10 @@ export function OpenStatus({ locationId, className }: { locationId: string; clas
   useEffect(() => {
     const loc = getLocation(locationId);
     if (!loc) return;
+    if (loc.status === 'soon') {
+      setLabel({ open: false, text: 'Opening soon' });
+      return;
+    }
     const update = () => {
       const plan = planSlots(loc);
       if (plan.openNow) {

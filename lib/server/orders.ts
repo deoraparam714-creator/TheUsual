@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import type { SQLInputValue } from 'node:sqlite';
 import { priceOrder, prepMinutes, type PricedLine, PricingError } from '@/lib/pricing';
 import { type CreateOrderInput, createOrderSchema, type OrderStatus } from '@/lib/schemas';
-import { getLocation } from '@/lib/site';
+import { getLocation, getOrderableLocation } from '@/lib/site';
 import { isValidSlot, istDayKey, planSlots } from '@/lib/slots';
 import { applyVisit } from '@/lib/tally';
 import { db, tx } from './db';
@@ -85,8 +85,8 @@ export function createOrder(raw: unknown, now: Date = new Date()): PublicOrder {
   if (!parsed.success) throw new OrderError(parsed.error.issues[0]?.message ?? 'Something’s off with that order.', 422);
   const input = parsed.data;
 
-  const location = getLocation(input.locationId);
-  if (!location) throw new OrderError('We don’t have a counter there.', 422);
+  const location = getOrderableLocation(input.locationId);
+  if (!location) throw new OrderError(getLocation(input.locationId) ? 'We’re not open there yet. Pick another pickup spot?' : 'We don’t have a counter there.', 422);
 
   const prep = prepMinutes(input.lines);
   let pickupAt: string;

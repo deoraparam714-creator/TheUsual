@@ -11,7 +11,7 @@ import { useRegular, useSlots } from '@/hooks/useOrderData';
 import { inr, istTime, normalizePhone } from '@/lib/format';
 import { priceOrder, prepMinutes, sameLines } from '@/lib/pricing';
 import { nameOnCupSchema } from '@/lib/schemas';
-import { formatHours, getLocation, locations } from '@/lib/site';
+import { formatHours, getOrderableLocation, openLocations } from '@/lib/site';
 import { tallyMessage } from '@/lib/tally';
 import { useCart } from '@/store/cart';
 import { useProfile } from '@/store/profile';
@@ -58,7 +58,7 @@ export function Checkout() {
 
   const nameValue = name ?? (hydrated ? profile.name : '');
   const phoneValue = phone ?? (hydrated ? profile.phone : '');
-  const location = getLocation(locationId) ?? locations[0];
+  const location = getOrderableLocation(locationId) ?? openLocations[0];
   const lines = useMemo(() => priced.map((p) => ({ itemId: p.line.itemId, qty: p.line.qty, options: p.line.options, note: p.line.note })), [priced]);
   const prep = prepMinutes(lines);
   const { plan, error: slotsError } = useSlots(location.id, prep);
@@ -193,8 +193,15 @@ export function Checkout() {
           </Step>
 
           <Step n={2} title="Pickup">
+            {openLocations.length === 1 ? (
+              <div className="rounded-[18px] border border-espresso bg-foam p-4">
+                <span className="t-label block text-grind">{location.kind}</span>
+                <span className="mt-1 block font-semibold">{location.name}</span>
+                <span className="mt-1 block text-xs text-grind">{formatHours(location.hours)}</span>
+              </div>
+            ) : (
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-3" role="radiogroup" aria-label="Pickup location">
-              {locations.map((l) => {
+              {openLocations.map((l) => {
                 const on = l.id === location.id;
                 return (
                   <button
@@ -212,6 +219,7 @@ export function Checkout() {
                 );
               })}
             </div>
+            )}
 
             <div className="mt-5 space-y-2" role="radiogroup" aria-label="Pickup time">
               {slotsError && <p className="text-sm text-error">Couldn’t load pickup times. Not you, us. Refresh to try again?</p>}

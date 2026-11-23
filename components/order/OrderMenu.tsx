@@ -11,7 +11,7 @@ import { useRegular, useSlots } from '@/hooks/useOrderData';
 import { greeting, inr, istTime, istWeekday } from '@/lib/format';
 import { categories, itemsIn, type MenuItem, menuById } from '@/lib/menu';
 import { describeLines, type LineInput, priceLine, prepMinutes } from '@/lib/pricing';
-import { getLocation, locations } from '@/lib/site';
+import { getOrderableLocation, openLocations } from '@/lib/site';
 import { tallyMessage } from '@/lib/tally';
 import { useCart } from '@/store/cart';
 import { useProfile } from '@/store/profile';
@@ -54,12 +54,12 @@ export function OrderMenu({ initialItem, initialLocation }: { initialItem?: stri
   useEffect(() => {
     if (!hydrated || handledParams.current) return;
     handledParams.current = true;
-    if (initialLocation && getLocation(initialLocation)) setLocation(initialLocation);
+    if (initialLocation && getOrderableLocation(initialLocation)) setLocation(initialLocation);
     if (initialItem && menuById[initialItem]) setOpenItem(menuById[initialItem]);
     if (initialItem || initialLocation) router.replace('/order', { scroll: false });
   }, [hydrated, initialItem, initialLocation, router, setLocation]);
 
-  const location = getLocation(locationId) ?? locations[0];
+  const location = getOrderableLocation(locationId) ?? openLocations[0];
   const usualLines = useMemo(() => (hydrated && usual ? validLines(usual.lines) : []), [hydrated, usual]);
   const prep = prepMinutes(lines.length ? lines : usualLines);
   const { plan } = useSlots(location.id, prep);

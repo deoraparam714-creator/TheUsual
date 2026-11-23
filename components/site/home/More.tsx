@@ -5,7 +5,7 @@ import { Tally } from '@/components/brand/Tally';
 import { Lines } from '@/components/motion/Lines';
 import { Reveal } from '@/components/motion/Reveal';
 import { ButtonLink } from '@/components/ui/Button';
-import { formatHours, locations } from '@/lib/site';
+import { locationHoursLabel, locations } from '@/lib/site';
 import { Container, Dot, Eyebrow } from '../Section';
 
 const STEPS = [
@@ -91,34 +91,62 @@ export function Places() {
             />
           </div>
           <Reveal className="md:col-span-4 md:col-start-9" delay={150}>
-            <p className="t-body-lg text-grind">Between classes, calls and catch-ups. A cart, a café and a kiosk, all making it the same way.</p>
+            <p className="t-body-lg text-grind">Between classes, calls and catch-ups. Takeaway from RJ Twin Building today, and a café of our own soon.</p>
           </Reveal>
         </div>
-        <ul className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-4 px-4 md:mx-0 md:mt-20 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0" aria-label="Locations">
+        <ul className="mt-10 grid grid-cols-2 gap-3 md:mt-20 md:gap-6" aria-label="Locations">
           {locations.map((l, i) => (
-            <Reveal as="li" key={l.id} delay={i * 120} className="w-[72vw] max-w-[320px] shrink-0 snap-start md:w-auto md:max-w-none">
-              <Link href={`/order?location=${l.id}`} className="group block">
-                <div className="img-reveal relative aspect-[3/4] overflow-hidden rounded-[18px] bg-toast">
-                  <div className="img-reveal-inner absolute inset-0">
-                    <Image src={l.image} alt={l.imageAlt} fill sizes="(min-width: 768px) 32vw, 100vw" className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.04]" />
-                  </div>
-                </div>
-                <div className="mt-4 flex flex-col gap-1 md:mt-5 md:flex-row md:items-start md:justify-between md:gap-4">
-                  <div>
-                    <p className="t-label text-grind">{l.kind}</p>
-                    <h3 className="t-title mt-2">{l.name}</h3>
-                    <p className="mt-2 text-[0.9375rem] text-grind">{formatHours(l.hours)}</p>
-                  </div>
-                  <span className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold md:mt-1">
-                    Order here <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-                  </span>
-                </div>
-              </Link>
+            <Reveal as="li" key={l.id} delay={i * 120}>
+              <PlaceCard l={l} />
             </Reveal>
           ))}
         </ul>
       </Container>
     </section>
+  );
+}
+
+function PlaceCard({ l }: { l: (typeof locations)[number] }) {
+  const soon = l.status === 'soon';
+  const body = (
+    <>
+      <div className="img-reveal relative aspect-[3/4] overflow-hidden rounded-[18px] bg-toast md:aspect-[4/3]">
+        <div className="img-reveal-inner absolute inset-0">
+          <Image
+            src={l.image}
+            alt={l.imageAlt}
+            fill
+            sizes="(min-width: 768px) 48vw, 50vw"
+            className={['object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-expo)]', soon ? 'grayscale-[35%]' : 'group-hover:scale-[1.04]'].join(' ')}
+          />
+        </div>
+        {soon && (
+          <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-milk px-3 py-1.5 text-xs font-semibold text-espresso">
+            <span className="size-1.5 rounded-full bg-grind" aria-hidden />
+            Opening soon
+          </span>
+        )}
+      </div>
+      <div className="mt-4 flex flex-col gap-1 md:mt-5 md:flex-row md:items-start md:justify-between md:gap-4">
+        <div>
+          <p className="t-label text-grind">{l.kind}</p>
+          <h3 className="mt-2 font-display text-lg font-extrabold leading-tight tracking-[-0.02em] md:text-[2rem]">{l.name}</h3>
+          <p className="mt-1 text-sm text-grind md:mt-2 md:text-[0.9375rem]">{locationHoursLabel(l)}</p>
+        </div>
+        {!soon && (
+          <span className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold md:mt-1">
+            Order here <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+          </span>
+        )}
+      </div>
+    </>
+  );
+  return soon ? (
+    <div>{body}</div>
+  ) : (
+    <Link href={`/order?location=${l.id}`} className="group block">
+      {body}
+    </Link>
   );
 }
 

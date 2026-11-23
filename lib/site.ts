@@ -36,45 +36,54 @@ export type Location = {
   imageAlt: string;
   /** Optional Google Maps link. Hidden when not set. */
   mapsUrl?: string;
+  /** "soon" locations are listed but can't take orders yet. */
+  status: 'open' | 'soon';
 };
 
 export const locations: Location[] = [
   {
-    id: 'campus',
-    name: 'Mesa campus',
-    kind: 'The cart',
-    area: 'Mesa campus, Bengaluru',
-    blurb: 'Under the trees, between classes. Order ahead and skip the line.',
+    id: 'rj-twin',
+    name: 'RJ Twin Building',
+    kind: 'Takeaway',
+    area: 'RJ Twin Building, Bengaluru',
+    blurb: 'Our takeaway counter. Order ahead and your usual is waiting, name on the cup.',
+    // ⚠️ Placeholder hours: set the real ones.
     hours: { days: [1, 2, 3, 4, 5, 6], open: '08:00', close: '18:00' },
     image: '/images/location-campus.jpg',
-    imageAlt: 'Students queueing at the usual coffee cart under a tree on campus',
+    imageAlt: 'People picking up orders at the usual takeaway counter',
+    status: 'open',
   },
   {
     id: 'cafe',
     name: 'The café',
-    kind: 'The café',
-    area: 'Indiranagar, Bengaluru',
-    blurb: 'The long table, the window bench and the regulars’ wall.',
+    kind: 'Café',
+    area: 'Bengaluru',
+    blurb: 'A room of our own: the long table, the window bench and the regulars’ wall.',
     hours: { days: [0, 1, 2, 3, 4, 5, 6], open: '08:00', close: '22:00' },
     image: '/images/location-cafe.jpg',
     imageAlt: 'Two regulars on the bench outside the usual café with cups in hand',
-  },
-  {
-    id: 'airport',
-    name: 'Airport kiosk',
-    kind: 'The kiosk',
-    area: 'Bengaluru airport, Terminal 2',
-    blurb: 'Your usual before you fly. Same roll, same cup, same name.',
-    hours: { days: [0, 1, 2, 3, 4, 5, 6], open: '05:00', close: '23:30' },
-    image: '/images/location-airport.jpg',
-    imageAlt: 'A traveller with a the usual cup walking past the airport kiosk',
+    status: 'soon',
   },
 ];
 
-export const DEFAULT_LOCATION_ID = 'campus';
+/** Locations that take orders today. */
+export const openLocations = locations.filter((l) => l.status === 'open');
+
+export const DEFAULT_LOCATION_ID = 'rj-twin';
 
 export function getLocation(id: string | undefined | null): Location | undefined {
   return locations.find((l) => l.id === id);
+}
+
+/** A location you can order from right now, or undefined. */
+export function getOrderableLocation(id: string | undefined | null): Location | undefined {
+  const l = getLocation(id);
+  return l?.status === 'open' ? l : undefined;
+}
+
+/** "Mon–Sat · 8am–6pm", or "Opening soon" for locations that aren't open yet. */
+export function locationHoursLabel(l: Location): string {
+  return l.status === 'soon' ? 'Opening soon' : formatHours(l.hours);
 }
 
 const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

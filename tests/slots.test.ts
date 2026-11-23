@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { formatHours, getLocation } from '@/lib/site';
+import { formatHours, getLocation, locationHoursLabel } from '@/lib/site';
 import { isValidSlot, istDayKey, planSlots } from '@/lib/slots';
 
-const campus = getLocation('campus')!; // Mon–Sat 08:00–18:00
+const takeaway = getLocation('rj-twin')!; // Mon–Sat 08:00–18:00
 const cafe = getLocation('cafe')!; // daily 08:00–22:00
 
 // Helper: an instant given as IST wall-clock time.
@@ -19,7 +19,7 @@ describe('pickup slots (IST)', () => {
 
   it('offers ASAP when open, ready after the prep time', () => {
     const now = ist('2026-11-23T10:30:00'); // Monday
-    const p = planSlots(campus, now, 6);
+    const p = planSlots(takeaway, now, 6);
     expect(p.openNow).toBe(true);
     expect(p.asapReadyAt).toBe(ist('2026-11-23T10:36:00').toISOString());
     // First scheduled slot leaves room for prep + 5 min, rounded to 15.
@@ -28,13 +28,13 @@ describe('pickup slots (IST)', () => {
   });
 
   it('stops ASAP when there is no time to make it before close', () => {
-    const p = planSlots(campus, ist('2026-11-23T17:57:00'), 6);
+    const p = planSlots(takeaway, ist('2026-11-23T17:57:00'), 6);
     expect(p.openNow).toBe(true);
     expect(p.asapAvailable).toBe(false);
   });
 
   it('skips closed days', () => {
-    const p = planSlots(campus, ist('2026-11-22T12:00:00'), 6); // Sunday
+    const p = planSlots(takeaway, ist('2026-11-22T12:00:00'), 6); // Sunday
     expect(p.openNow).toBe(false);
     expect(p.slots[0].dayLabel).toBe('Tomorrow');
     expect(p.opensAt).toBe(ist('2026-11-23T08:00:00').toISOString());
@@ -42,11 +42,11 @@ describe('pickup slots (IST)', () => {
 
   it('validates requested slots', () => {
     const now = ist('2026-11-23T10:30:00');
-    expect(isValidSlot(campus, ist('2026-11-23T12:00:00').toISOString(), now, 6)).toBe(true);
-    expect(isValidSlot(campus, ist('2026-11-23T12:07:00').toISOString(), now, 6)).toBe(false); // off-grid
-    expect(isValidSlot(campus, ist('2026-11-23T10:31:00').toISOString(), now, 6)).toBe(false); // too soon
-    expect(isValidSlot(campus, ist('2026-11-23T19:00:00').toISOString(), now, 6)).toBe(false); // after close
-    expect(isValidSlot(campus, 'not a date', now, 6)).toBe(false);
+    expect(isValidSlot(takeaway, ist('2026-11-23T12:00:00').toISOString(), now, 6)).toBe(true);
+    expect(isValidSlot(takeaway, ist('2026-11-23T12:07:00').toISOString(), now, 6)).toBe(false); // off-grid
+    expect(isValidSlot(takeaway, ist('2026-11-23T10:31:00').toISOString(), now, 6)).toBe(false); // too soon
+    expect(isValidSlot(takeaway, ist('2026-11-23T19:00:00').toISOString(), now, 6)).toBe(false); // after close
+    expect(isValidSlot(takeaway, 'not a date', now, 6)).toBe(false);
   });
 
   it('keys order numbers by IST calendar day', () => {
@@ -55,7 +55,9 @@ describe('pickup slots (IST)', () => {
   });
 
   it('formats opening hours', () => {
-    expect(formatHours(campus.hours)).toBe('Mon–Sat · 8am–6pm');
-    expect(formatHours(getLocation('airport')!.hours)).toBe('Every day · 5am–11:30pm');
+    expect(formatHours(takeaway.hours)).toBe('Mon–Sat · 8am–6pm');
+    expect(formatHours(cafe.hours)).toBe('Every day · 8am–10pm');
+    expect(locationHoursLabel(cafe)).toBe('Opening soon');
+    expect(locationHoursLabel(takeaway)).toBe('Mon–Sat · 8am–6pm');
   });
 });

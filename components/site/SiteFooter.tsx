@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Logo } from '@/components/brand/Logo';
-import { formatHours, locations, site } from '@/lib/site';
+import { locationHoursLabel, locations, site } from '@/lib/site';
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -22,7 +22,7 @@ export function SiteFooter() {
               {locations.map((l) => (
                 <li key={l.id}>
                   <p className="font-medium">{l.name}</p>
-                  <p className="text-sm text-milk/60">{formatHours(l.hours)}</p>
+                  <p className="text-sm text-milk/60">{locationHoursLabel(l)}</p>
                 </li>
               ))}
             </ul>

@@ -58,7 +58,7 @@ export function Hero() {
                   alt="the usual storefront at golden hour: espresso fascia, ‘regulars welcome.’ on the window, people at the long table"
                   fill
                   preload
-                  quality={85}
+                  quality={90}
                   sizes="(min-width: 1440px) 1344px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 32px)"
                   className="object-cover object-[22%_50%]"
                 />

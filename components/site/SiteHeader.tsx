@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Logo } from '@/components/brand/Logo';
 import { ButtonLink } from '@/components/ui/Button';
-import { formatHours, locations, nav, site } from '@/lib/site';
+import { locationHoursLabel, locations, nav, site } from '@/lib/site';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -148,7 +148,7 @@ export function SiteHeader() {
                 {locations.map((l) => (
                   <li key={l.id} className="flex justify-between gap-4">
                     <span>{l.name}</span>
-                    <span className="text-milk/50">{formatHours(l.hours)}</span>
+                    <span className="text-milk/50">{locationHoursLabel(l)}</span>
                   </li>
                 ))}
               </ul>

@@ -9,10 +9,10 @@ beforeAll(async () => {
 });
 
 const ist = (s: string) => new Date(`${s}+05:30`);
-const NOW = ist('2026-11-23T10:30:00'); // Monday, campus open
+const NOW = ist('2026-11-23T10:30:00'); // Monday, takeaway open
 
 const base = (over: Record<string, unknown> = {}) => ({
-  locationId: 'campus',
+  locationId: 'rj-twin',
   pickup: { type: 'asap' },
   nameOnCup: 'Riya',
   phone: '+91 98765 43210',
@@ -40,7 +40,9 @@ describe('orders repository', () => {
   it('rejects bad input with friendly messages', () => {
     expect(() => m.createOrder(base({ nameOnCup: '' }), NOW)).toThrow('No name, no cup');
     expect(() => m.createOrder(base({ phone: '12345' }), NOW)).toThrow('10-digit');
-    expect(() => m.createOrder(base({ locationId: 'mars' }), NOW)).toThrow();
+    expect(() => m.createOrder(base({ locationId: 'mars' }), NOW)).toThrow('don’t have a counter');
+    expect(() => m.createOrder(base({ locationId: 'cafe' }), NOW)).toThrow('not open there yet');
+    expect(() => m.createOrder(base({ locationId: 'airport' }), NOW)).toThrow();
     expect(() => m.createOrder(base(), ist('2026-11-23T02:00:00'))).toThrow('closed');
   });
 

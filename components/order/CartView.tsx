@@ -7,7 +7,7 @@ import { buttonClass } from '@/components/ui/Button';
 import { useHydrated } from '@/hooks/useHydrated';
 import { inr } from '@/lib/format';
 import { type PricedLine, priceLine } from '@/lib/pricing';
-import { getLocation } from '@/lib/site';
+import { getOrderableLocation, openLocations } from '@/lib/site';
 import { type CartLine, useCart } from '@/store/cart';
 import { Stepper } from './bits';
 
@@ -33,7 +33,7 @@ export function CartView({ onNavigate, showCheckout = true }: { onNavigate?: () 
   const setQty = useCart((s) => s.setQty);
   const locationId = useCart((s) => s.locationId);
   const { priced, subtotal, count } = usePricedCart();
-  const location = getLocation(locationId);
+  const location = getOrderableLocation(locationId) ?? openLocations[0];
 
   if (!hydrated) return <div className="min-h-40" aria-busy="true" />;
 
